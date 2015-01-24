@@ -16,7 +16,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :bill_city
       t.string :bill_state
       t.integer :bill_zip
-      
+        
       t.timestamps
     end
   end
