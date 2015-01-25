@@ -10,7 +10,7 @@ class CreateBoxes < ActiveRecord::Migration
 			t.timestamps
 		end
 
-		add_index :box, :user_id
+		add_index :boxes, :user_id
 		add_index :boxes, :child_id
 
   end

@@ -10,8 +10,11 @@ class CreateChildren < ActiveRecord::Migration
       t.integer :pant_size
       t.integer :jacket_size
       t.integer :shoe_size
+      t.integer :user_id
 
       t.timestamps
     end
+
+    add_index :children, :user_id
   end
 end
