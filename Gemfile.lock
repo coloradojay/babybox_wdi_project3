@@ -28,9 +28,14 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
+    autoprefixer-rails (5.0.0.3)
+      execjs
+      json
     awesome_print (1.6.1)
     binding_of_caller (0.7.3.pre1)
       debug_inspector (>= 0.0.1)
+    bootstrap-sass (3.3.1.0)
+      sass (~> 3.2)
     builder (3.2.2)
     byebug (3.5.1)
       columnize (~> 0.8)
@@ -58,6 +63,8 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
+    font-awesome-rails (4.3.0.0)
+      railties (>= 3.2, < 5.0)
     hike (1.2.3)
     hirb (0.7.2)
     i18n (0.7.0)
@@ -185,8 +192,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  autoprefixer-rails
+  bootstrap-sass (~> 3.3.1.0)
   coffee-rails (~> 4.0.0)
   factory_girl_rails
+  font-awesome-rails
   jbuilder (~> 2.0)
   jquery-rails
   pg
