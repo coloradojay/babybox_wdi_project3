@@ -13,8 +13,12 @@ class CreateProducts < ActiveRecord::Migration
       t.integer :shoe_size
       t.string :sku
       t.string :brand
+      t.integer :box_id
 
       t.timestamps
     end
+    
+    add_index :products, :box_id
+    
   end
 end

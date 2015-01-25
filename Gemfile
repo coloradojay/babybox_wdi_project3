@@ -12,6 +12,9 @@ group :development, :test do
   gem 'factory_girl_rails'
 end
 
+# Using Spirit Fingers for development purposes
+gem 'spirit_fingers', :group => :development
+
 ###################
 # RAILS GEMS
 ###################

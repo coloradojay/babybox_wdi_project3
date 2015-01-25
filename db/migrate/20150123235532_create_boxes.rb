@@ -4,8 +4,14 @@ class CreateBoxes < ActiveRecord::Migration
       t.string :order_number
       t.integer :status
       t.belongs_to :user
-      t.timestamps
+      t.integer	:user_id
+			t.integer	:child_id
 
-    end
+			t.timestamps
+		end
+
+		add_index :box, :user_id
+		add_index :boxes, :child_id
+
   end
 end

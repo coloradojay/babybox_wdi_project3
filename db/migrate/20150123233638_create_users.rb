@@ -16,8 +16,11 @@ class CreateUsers < ActiveRecord::Migration
       t.string :bill_city
       t.string :bill_state
       t.integer :bill_zip
-        
+      t.integer :user_id
+
       t.timestamps
     end
+ 
+      add_index :children, :user_id
   end
 end
