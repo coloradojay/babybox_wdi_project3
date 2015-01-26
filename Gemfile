@@ -4,7 +4,8 @@ source 'https://rubygems.org'
 # Added Gems
 ###################
 
-
+# Secure security credentials and keys
+gem 'figaro'
 
 # For development and testing purposes
 group :development, :test do
