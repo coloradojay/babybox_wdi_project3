@@ -21,5 +21,7 @@ RSpec.describe User, :type => :model do
       expect(FactoryGirl.build(:user, password: "")).to be_invalid
     end
 
-    it "is invalid with a password with 7 characters or less"
+    it "is invalid with a password with 7 characters or less" do
+      expect(FactoryGirl.build(:user, password: "believe")).to be_invalid
+    end
 end
