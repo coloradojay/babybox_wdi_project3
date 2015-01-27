@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ###################
 # Added Gems
 ###################
-# gem 'byebug', '~> 3.5.1'
+
 # Secure security credentials and keys
 gem 'figaro'
 
@@ -11,6 +11,7 @@ gem 'figaro'
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  # gem 'byebug', '~> 3.5.1'
 end
 
 # Using Spirit Fingers for development purposes
