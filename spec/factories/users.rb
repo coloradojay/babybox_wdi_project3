@@ -3,6 +3,7 @@ FactoryGirl.define do
     first_name "Fred"
     last_name "Rogers"
     email "mrrogers@neighborhood.com"
+    password "makebelieveneiborhood"
     ship_address_1 "13 Castle Blvd"
     ship_address_2 ""
     ship_city "Westwood"
