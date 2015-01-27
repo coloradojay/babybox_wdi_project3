@@ -209,6 +209,7 @@ PLATFORMS
 DEPENDENCIES
   autoprefixer-rails
   bootstrap-sass (~> 3.3.1.0)
+  byebug (~> 3.5.1)
   coffee-rails (~> 4.0.0)
   factory_girl_rails
   figaro

@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ###################
 # Added Gems
 ###################
-
+gem 'byebug', '~> 3.5.1'
 # Secure security credentials and keys
 gem 'figaro'
 
