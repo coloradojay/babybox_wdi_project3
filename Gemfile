@@ -4,6 +4,10 @@ source 'https://rubygems.org'
 # Added Gems
 ###################
 
+# Authentication
+gem 'devise', '~> 3.4.1'
+
+
 # Secure security credentials and keys
 gem 'figaro'
 
