@@ -1,4 +1,5 @@
 class Box < ActiveRecord::Base
+	# Adding constant for box status, allowing for business to update in the future
 	BOX_STATUSES = {
 		0 => "Processing",
 		1 => "Shipped",
@@ -12,4 +13,7 @@ class Box < ActiveRecord::Base
 
 	has_many :products
 
+	validates :user, presence: true
+	validates :child, presence: true
+	
 end
