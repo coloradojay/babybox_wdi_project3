@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :child do
     name "MyString"
 age_yrs 1
-age_months 1
+age_months 36 
 gender "MyString"
 style 1
 shirt_size 1
