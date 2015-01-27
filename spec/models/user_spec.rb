@@ -8,6 +8,9 @@ RSpec.describe User, :type => :model do
     it "is invalid without a first name" do
       expect(FactoryGirl.build(:user, first_name: nil)).to be_invalid
     end
-    it "is invalid without a last name"
+
+    it "is invalid without a last name" do
+      expect(FactoryGirl.build(:user, last_name: nil)).to be_invalid
+    end
     it "is invalid without an email"
 end
