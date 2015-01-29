@@ -4,6 +4,10 @@ class BoxesController < ApplicationController
 		@box = Box.new
 	end
 
+	def show
+  	@box = Box.find(params[:id])
+	end
+
 	def create
 		@box = Box.new(box_params)
 
@@ -15,9 +19,7 @@ class BoxesController < ApplicationController
 		end
 	end
 
-	def show
-  	@box = Box.find(params[:id])
-	end
+	
 
 	def update
 		@box = Post.find(params[:id])
