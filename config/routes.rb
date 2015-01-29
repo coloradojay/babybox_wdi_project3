@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
  
   devise_for :users
-  root 'static_pages#index'
+  root 'static_pages#home'
   resources :boxes, except: :index
 
   # The priority is based upon order of creation: first created -> highest priority.
