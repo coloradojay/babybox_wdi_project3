@@ -1,7 +1,9 @@
 class BoxesController < ApplicationController
-
+	require_relative "ShopStyleAPI.rb"
+	
 	def new
 		@box = Box.new
+		@asdf = ShopStyleAPI.new()
 	end
 
 	def create

@@ -1,4 +1,5 @@
-class ShopStyleAPI
+class ShopStyleAPI < ApplicationController
+  # Used to make GET requests 
   require 'httparty'
 
   # Convert from babybox's ClothingSizes to
@@ -34,6 +35,30 @@ class ShopStyleAPI
 
   PID = ENV['SHOPSTYLE_API_KEY']
 
+  # search filter; IDs used by ShopStyle.com to identify brands
+  @@brand_ids = {
+    adidas:         "&fl=b14",
+    ben_sherman:    "&fl=b72",
+    arizona:        "&fl=b16991",
+    nike:           "&fl=b422",
+    puma:           "&fl=b468",
+    quiksilver:     "&fl=b469",
+    the_north_face: "&fl=b578",
+    under_armour:   "&fl=b2184",
+    oxford:         "&fl=16570",
+    asics:          "&fl=b2723",
+    gymboree:       "&fl=b2667",
+    diesel:         "&fl=b172",
+    river_island:   "&fl=b22713",
+    ralph_lauren:   "&fl=b1873",
+    polo_jeans:     "&fl=b461"
+  }
+
+  @@base_url            = "http://api.shopstyle.com/api/v2/products?pid=#{PID}"
+  @@base_price_filter   = "&fl=p20:"
+  @@sort_by_popular     = "&sort=Popular"
+  @@limit_to_50         = "&limit=50"
+
   # Initialize
   def initialize(style = 0, shirt_size = 6, pant_size = 6, jacket_size = 6, gender = "male", price = 50)
     @style       = 0
@@ -49,16 +74,31 @@ class ShopStyleAPI
   # Polos, shirts, tees-and-tshirts
   def shirt_API_data
     if @style == 0 # Athletic
-      # BUG = Currently pulling data for all shirts. But, need to order data where adidas, nike,
-      #        under armour, and asics products are shown first
-      tees_response = HTTParty.get("http://api.shopstyle.com/api/v2/products?pid=#{PID}&fl=s#{CLOTHING_SIZES[@shirt_size]}&fl=p20:#{SHOPSTYLE_PRICE_ID[@price]}&cat=boys-tees-and-tshirts&sort=Popular&limit=50&fl=b14$fl=b422$fl=b2184$fl=b2723")
+      # build url for request
+      request_url = @@base_url
+      request_url += @@sort_by_popular
+      request_url += @@limit_to_50
 
-      if tees_response.nil?
-       tees_response = HTTParty.get("http://api.shopstyle.com/api/v2/products?pid=#{PID}&fl=s#{CLOTHING_SIZES[@shirt_size]}&fl=p20:#{SHOPSTYLE_PRICE_ID[@price]}&cat=boys-tees-and-tshirts&sort=Popular&limit=50")
-      end
+      # add price filter to url
+      request_url += @@base_price_filter
+      request_url += SHOPSTYLE_PRICE_ID[@price].to_s
 
+      # add size filter
+      request_url += "&fl=s#{CLOTHING_SIZES[@shirt_size]}"
 
+      # add category filter to url
+      request_url += "&cat=boys-tees-and-tshirts"
+
+      # add brand filters
+      # adidas, nike, armour, and asics products
+      request_url += @@brand_ids[:adidas] + @@brand_ids[:nike] + @@brand_ids[:under_armour] + @@brand_ids[:asics]
+
+      # Send request to Shopstyle.com
+      tees_response = HTTParty.get(request_url)
+
+      # Collect the array of products
       shirt_products = JSON.parse(tees_response.body)["products"]
+
     elsif @style == 1 # Formal
 
 
