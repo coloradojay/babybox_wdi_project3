@@ -4,6 +4,7 @@ ruby '2.1.3'
 # Added Gems
 ###################
 
+
 # Used to make client requests for API
 gem 'httparty'
 
@@ -20,8 +21,11 @@ group :development, :test do
   gem 'factory_girl_rails'
 end
 
-# Using Spirit Fingers for development purposes
-gem 'spirit_fingers', :group => :development
+# Development only purposes
+group :development do
+  gem 'spirit_fingers'
+  gem "better_errors"
+end
 
 ###################
 # RAILS GEMS
