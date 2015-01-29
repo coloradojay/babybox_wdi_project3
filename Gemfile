@@ -4,6 +4,9 @@ ruby '2.1.3'
 # Added Gems
 ###################
 
+# Used to make client requests for API
+gem 'httparty'
+
 # Authentication
 gem 'devise', '~> 3.4.1'
 
