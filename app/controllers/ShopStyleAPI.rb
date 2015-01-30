@@ -51,7 +51,8 @@ class ShopStyleAPI < ApplicationController
     diesel:         "&fl=b172",
     river_island:   "&fl=b22713",
     ralph_lauren:   "&fl=b1873",
-    polo_jeans:     "&fl=b461"
+    polo_jeans:     "&fl=b461",
+    childrens_place: "&fl=b3872"
   }
 
   @@base_url            = "http://api.shopstyle.com/api/v2/products?pid=#{PID}"
@@ -100,13 +101,109 @@ class ShopStyleAPI < ApplicationController
       shirt_products = JSON.parse(tees_response.body)["products"]
 
     elsif @style == 1 # Formal
+        # build url for request
+        request_url = @@base_url
+        request_url += @@sort_by_popular
+        request_url += @@limit_to_50
+
+        # add price filter to url
+        request_url += @@base_price_filter
+        request_url += SHOPSTYLE_PRICE_ID[@price].to_s
+
+        # add size filter
+        request_url += "&fl=s#{CLOTHING_SIZES[@shirt_size]}"
+
+        # add category filter to url
+        request_url += "&cat=boys-tshirts"
+
+        # add brand filters
+        # oxford
+        request_url += @@brand_ids[:oxford]
+
+        # Send request to Shopstyle.com
+        tees_response = HTTParty.get(request_url)
+
+        # Collect the array of products
+        shirt_products = JSON.parse(tees_response.body)["products"]
 
 
     elsif @style == 2 # Everyday
+        # build url for request
+        request_url = @@base_url
+        request_url += @@sort_by_popular
+        request_url += @@limit_to_50
+
+        # add price filter to url
+        request_url += @@base_price_filter
+        request_url += SHOPSTYLE_PRICE_ID[@price].to_s
+
+        # add size filter
+        request_url += "&fl=s#{CLOTHING_SIZES[@shirt_size]}"
+
+        # add category filter to url
+        request_url += "&cat=boys-tees-and-tshirts"
+
+        # add brand filters
+        # gymboree
+        request_url += @@brand_ids[:gymboree]
+
+        # Send request to Shopstyle.com
+        tees_response = HTTParty.get(request_url)
+
+        # Collect the array of products
+        shirt_products = JSON.parse(tees_response.body)["products"]      
 
     elsif @style == 3 # Play
+       # build url for request
+        request_url = @@base_url
+        request_url += @@sort_by_popular
+        request_url += @@limit_to_50
+
+        # add price filter to url
+        request_url += @@base_price_filter
+        request_url += SHOPSTYLE_PRICE_ID[@price].to_s
+
+        # add size filter
+        request_url += "&fl=s#{CLOTHING_SIZES[@shirt_size]}"
+
+        # add category filter to url
+        request_url += "&cat=boys-tees-and-tshirts"
+
+        # add brand filters
+        # gymboree
+        request_url += @@brand_ids[:gymboree] + @@brand_ids[:childrens_place]
+
+        # Send request to Shopstyle.com
+        tees_response = HTTParty.get(request_url)
+
+        # Collect the array of products
+        shirt_products = JSON.parse(tees_response.body)["products"]   
 
     elsif @style == 4 # Trendy
+       # build url for request
+        request_url = @@base_url
+        request_url += @@sort_by_popular
+        request_url += @@limit_to_50
+
+        # add price filter to url
+        request_url += @@base_price_filter
+        request_url += SHOPSTYLE_PRICE_ID[@price].to_s
+
+        # add size filter
+        request_url += "&fl=s#{CLOTHING_SIZES[@shirt_size]}"
+
+        # add category filter to url
+        request_url += "&cat=boys-tees-and-tshirts"
+
+        # add brand filters
+        # diesel, ben sherman, river island
+        request_url += @@brand_ids[:river_island] + @@brand_ids[:diesel] + @@brand_ids[:ben_sherman] 
+
+        # Send request to Shopstyle.com
+        tees_response = HTTParty.get(request_url)
+
+        # Collect the array of products
+        shirt_products = JSON.parse(tees_response.body)["products"]  
 
     else
       puts "ERROR. No style indicated"
@@ -119,19 +216,130 @@ class ShopStyleAPI < ApplicationController
   # Sweaters and sweatshirts
   def jackets_API_data
     if @style == 0 # Athletic
-      # Sweatshirt products from Nike, adidas, Puma, Quiksilver, The North Face,
-      # and Under Armour
-      sweatshirts_response = HTTParty.get("http://api.shopstyle.com/api/v2/products?pid=#{PID}&fl=s#{CLOTHING_SIZES[@jacket_size]}&fl=p20:#{SHOPSTYLE_PRICE_ID[@price]}&cat=boys-sweatshirts&sort=Popular&limit=50&fl=b422&fl=b14&fl=b468&fl=b578&fl=b2184")
+      # build url for request
+      request_url = @@base_url
+      request_url += @@sort_by_popular
+      request_url += @@limit_to_50
 
-      jackets_products = JSON.parse(sweatshirts_response.body)["products"]
+      # add price filter to url
+      request_url += @@base_price_filter
+      request_url += SHOPSTYLE_PRICE_ID[@price].to_s
+
+      # add size filter
+      request_url += "&fl=s#{CLOTHING_SIZES[@shirt_size]}"
+
+      # add category filter to url
+      request_url += "&cat=boys-sweatshirts"
+
+      # add brand filters
+      # adidas, nike, armour, and asics products
+      request_url += @@brand_ids[:adidas] + @@brand_ids[:nike] + @@brand_ids[:under_armour] + @@brand_ids[:asics]
+
+      # Send request to Shopstyle.com
+      tees_response = HTTParty.get(request_url)
+
+      # Collect the array of products
+      jacket_products = JSON.parse(tees_response.body)["products"]
+
     elsif @style == 1 # Formal
+        # build url for request
+        request_url = @@base_url
+        request_url += @@sort_by_popular
+        request_url += @@limit_to_50
 
+        # add price filter to url
+        request_url += @@base_price_filter
+        request_url += SHOPSTYLE_PRICE_ID[@price].to_s
+
+        # add size filter
+        request_url += "&fl=s#{CLOTHING_SIZES[@shirt_size]}"
+
+        # add category filter to url
+        request_url += "&cat=boys-sweaters"
+
+        # add brand filters
+        # oxford
+        request_url += "?fts=cardigan"
+
+        # Send request to Shopstyle.com
+        tees_response = HTTParty.get(request_url)
+
+        # Collect the array of products
+        jackets_products = JSON.parse(tees_response.body)["products"]
 
     elsif @style == 2 # Everyday
+        # build url for request
+        request_url = @@base_url
+        request_url += @@sort_by_popular
+        request_url += @@limit_to_50
+
+        # add price filter to url
+        request_url += @@base_price_filter
+        request_url += SHOPSTYLE_PRICE_ID[@price].to_s
+
+        # add size filter
+        request_url += "&fl=s#{CLOTHING_SIZES[@shirt_size]}"
+
+        # add category filter to url
+        request_url += "&cat=boys-sweaters"
+
+        # add brand filters
+        # crewneck
+        request_url += "?fts=crewneck"
+
+        # Send request to Shopstyle.com
+        tees_response = HTTParty.get(request_url)
+
+        # Collect the array of products
+        jackets_products = JSON.parse(tees_response.body)["products"]
 
     elsif @style == 3 # Play
+        # build url for request
+        request_url = @@base_url
+        request_url += @@sort_by_popular
+        request_url += @@limit_to_50
+
+        # add price filter to url
+        request_url += @@base_price_filter
+        request_url += SHOPSTYLE_PRICE_ID[@price].to_s
+
+        # add size filter
+        request_url += "&fl=s#{CLOTHING_SIZES[@shirt_size]}"
+
+        # add category filter to url
+        request_url += "&cat=boys-sweatshirts"
+
+        # Send request to Shopstyle.com
+        tees_response = HTTParty.get(request_url)
+
+        # Collect the array of products
+        jackets_products = JSON.parse(tees_response.body)["products"]
 
     elsif @style == 4 # Trendy
+        # build url for request
+        request_url = @@base_url
+        request_url += @@sort_by_popular
+        request_url += @@limit_to_50
+
+        # add price filter to url
+        request_url += @@base_price_filter
+        request_url += SHOPSTYLE_PRICE_ID[@price].to_s
+
+        # add size filter
+        request_url += "&fl=s#{CLOTHING_SIZES[@shirt_size]}"
+
+        # add category filter to url
+        request_url += "&cat=boys-sweaters"
+
+        # add brand filters
+        # crewneck
+        request_url += "?fts=cardigan"
+
+        # Send request to Shopstyle.com
+        tees_response = HTTParty.get(request_url)
+
+        # Collect the array of products
+        jackets_products = JSON.parse(tees_response.body)["products"]      
 
     else
       puts "ERROR. No style indicated"
@@ -143,24 +351,133 @@ class ShopStyleAPI < ApplicationController
   # Return Bottoms API data
   # Shorts, jeans, and pants
   def bottoms_API_data
-    if @style == 0 # Athletic
-      pants_response = HTTParty.get("http://api.shopstyle.com/api/v2/products?pid=#{PID}&fl=s#{CLOTHING_SIZES[@pant_size]}&fl=p20:#{SHOPSTYLE_PRICE_ID[@price]}&cat=boys-pants&sort=Popular&limit=50&fl=b422&fl=b14&fl=b468&fl=b578&fl=b2184")
+        if @style == 0 # Athletic
+      # build url for request
+      request_url = @@base_url
+      request_url += @@sort_by_popular
+      request_url += @@limit_to_50
 
-      pants_products = JSON.parse(pants_response.body)["products"]
+      # add price filter to url
+      request_url += @@base_price_filter
+      request_url += SHOPSTYLE_PRICE_ID[@price].to_s
 
-      shorts_response = HTTParty.get("http://api.shopstyle.com/api/v2/products?pid=#{PID}&fl=s#{CLOTHING_SIZES[@pant_size]}&fl=p20:#{SHOPSTYLE_PRICE_ID[@price]}&cat=boys-shortss&sort=Popular&limit=50&fl=b422&fl=b14&fl=b468&fl=b578&fl=b2184")
+      # add size filter
+      request_url += "&fl=s#{CLOTHING_SIZES[@shirt_size]}"
 
-      shorts_products = JSON.parse(shorts_response.body)["products"]
+      # add category filter to url
+      request_url += "&cat=boys-pants"
 
-      bottoms_products = shorts_products.zip(pants_products).flatten.compact
+      # add search filter to url
+      request_url += "?fts=track"
+
+      # add brand filters
+      # adidas, nike, armour, and asics products
+      request_url += @@brand_ids[:adidas] + @@brand_ids[:nike] + @@brand_ids[:under_armour] + @@brand_ids[:asics]
+
+      # Send request to Shopstyle.com
+      tees_response = HTTParty.get(request_url)
+
+      # Collect the array of products
+      bottoms_products = JSON.parse(tees_response.body)["products"]
 
     elsif @style == 1 # Formal
+      # build url for request
+      request_url = @@base_url
+      request_url += @@sort_by_popular
+      request_url += @@limit_to_50
+
+      # add price filter to url
+      request_url += @@base_price_filter
+      request_url += SHOPSTYLE_PRICE_ID[@price].to_s
+
+      # add size filter
+      request_url += "&fl=s#{CLOTHING_SIZES[@shirt_size]}"
+
+      # add category filter to url
+      request_url += "&cat=boys-pants"
+
+      # add search filter to url
+      request_url += "?fts=suit-pants"
+
+      # Send request to Shopstyle.com
+      tees_response = HTTParty.get(request_url)
+
+      # Collect the array of products
+      bottoms_products = JSON.parse(tees_response.body)["products"]
 
     elsif @style == 2 # Everyday
+      # build url for request
+      request_url = @@base_url
+      request_url += @@sort_by_popular
+      request_url += @@limit_to_50
+
+      # add price filter to url
+      request_url += @@base_price_filter
+      request_url += SHOPSTYLE_PRICE_ID[@price].to_s
+
+      # add size filter
+      request_url += "&fl=s#{CLOTHING_SIZES[@shirt_size]}"
+
+      # add category filter to url
+      request_url += "&cat=boys-pants"
+
+      # Send request to Shopstyle.com
+      tees_response = HTTParty.get(request_url)
+
+      # Collect the array of products
+      bottoms_products = JSON.parse(tees_response.body)["products"]
 
     elsif @style == 3 # Play
+      # build url for request
+      request_url = @@base_url
+      request_url += @@sort_by_popular
+      request_url += @@limit_to_50
+
+      # add price filter to url
+      request_url += @@base_price_filter
+      request_url += SHOPSTYLE_PRICE_ID[@price].to_s
+
+      # add size filter
+      request_url += "&fl=s#{CLOTHING_SIZES[@shirt_size]}"
+
+      # add category filter to url
+      request_url += "&cat=boys-pants"
+
+      # add brand filters
+      # adidas, nike, armour, and asics products
+      request_url += @@brand_ids[:gymboree]       
+
+      # Send request to Shopstyle.com
+      tees_response = HTTParty.get(request_url)
+
+      # Collect the array of products
+      bottoms_products = JSON.parse(tees_response.body)["products"]
 
     elsif @style == 4 # Trendy
+      # build url for request
+      request_url = @@base_url
+      request_url += @@sort_by_popular
+      request_url += @@limit_to_50
+
+      # add price filter to url
+      request_url += @@base_price_filter
+      request_url += SHOPSTYLE_PRICE_ID[@price].to_s
+
+      # add size filter
+      request_url += "&fl=s#{CLOTHING_SIZES[@shirt_size]}"
+
+      # add category filter to url
+      request_url += "&cat=boys-pants"
+
+      # add search filter to url
+      # chino, twill & casual
+      request_url += "?fts=chino+twill+casual"
+
+      # Send request to Shopstyle.com
+      tees_response = HTTParty.get(request_url)
+
+      # Collect the array of products
+      bottoms_products = JSON.parse(tees_response.body)["products"]
 
     else
       puts "ERROR. No style indicated"
