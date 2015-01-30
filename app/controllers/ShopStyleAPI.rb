@@ -61,8 +61,8 @@ class ShopStyleAPI < ApplicationController
   @@limit_to_50         = "&limit=50"
 
   # Initialize
-  def initialize(style = 0, shirt_size = 6, pant_size = 6, jacket_size = 6, gender = "male", price = 50)
-    @style       = 0
+  def initialize(style = 1, shirt_size = 6, pant_size = 6, jacket_size = 6, gender = "male", price = 50)
+    @style       = style
     @shirt_size  = shirt_size
     @pant_size   = pant_size
     @jacket_size = jacket_size
