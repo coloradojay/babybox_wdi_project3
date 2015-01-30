@@ -1,9 +1,13 @@
 source 'https://rubygems.org'
+gem 'devise'
+gem 'rails_admin'
 ruby '2.1.3'
 ###################
 # Added Gems
 ###################
 
+# piggybak for the shopping cart
+gem 'piggybak', '~> 0.7.5'
 
 # Used to make client requests for API
 gem 'httparty'
