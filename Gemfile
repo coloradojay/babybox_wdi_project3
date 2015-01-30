@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
-gem 'devise'
-gem 'rails_admin'
+
 ruby '2.1.3'
 ###################
 # Added Gems
@@ -13,7 +12,9 @@ gem 'piggybak', '~> 0.7.5'
 gem 'httparty'
 
 # Authentication
-gem 'devise', '~> 3.4.1'
+gem 'devise'
+# Rails Admin
+gem 'rails_admin'
 
 
 # Secure security credentials and keys
