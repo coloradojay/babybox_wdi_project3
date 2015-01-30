@@ -139,10 +139,44 @@ class GirlsShopStyleAPI < ApplicationController
       shirt_products = tees_by_brand_products.zip(tees_by_query_products).flatten.compact
 
     elsif @style == 1 # Formal
+      ##################################################
+      # API call for Dress category
+      # with 'sequin,' 'formal,' 'sparkling,' and 'lace' query
+      ##################################################
+      # build partial url
+      build_partial_url("&cat=girls-dresses")
 
-      # None for Formal style
-      # Return error?  Message?
+      # add search query filter
+      @request_url += "&fts=sequin&fts=formal&fts=sparkling&fts=lace"
 
+      # Send request to Shopstyle.com
+      dresses_by_query_response = HTTParty.get(@request_url)
+
+      # Collect products
+      dresses_by_query_products = JSON.parse(dresses_by_query_response.body)["products"]
+
+      ##################################################
+      # API call for Dress category
+      # with brand filter 'Aletta'
+      ##################################################
+      # build partial url
+      build_partial_url("&cat=girls-dresses")
+
+      # add brand filter
+      @request_url += "&fl=b2582"
+
+      # Send request to Shopstyle.com
+      dresses_by_brand_response = HTTParty.get(@request_url)
+
+      # Collect products
+      dresses_by_brand_products = JSON.parse(dresses_by_brand_response.body)["products"]
+
+      #########################
+      # Combine products
+      #########################
+      # Zip (interweave) products data into one array
+      shirt_products = dresses_by_brand_products.zip(dresses_by_query_products).flatten.compact
+      
     elsif @style == 2 # Everyday
       ##########################################
       # API call for Shirts and Blouses category
@@ -245,24 +279,102 @@ class GirlsShopStyleAPI < ApplicationController
   # Sweaters and sweatshirts
   def jackets_API_data
     if @style == 0 # Athletic
-      # Sweatshirt products from Nike, adidas, Puma, Quiksilver, The North Face,
-      # and Under Armour
-      sweatshirts_response = HTTParty.get("http://api.shopstyle.com/api/v2/products?pid=#{PID}&fl=s#{CLOTHING_SIZES[@jacket_size]}&fl=p20:#{SHOPSTYLE_PRICE_ID[@price]}&cat=boys-sweatshirts&sort=Popular&limit=50&fl=b422&fl=b14&fl=b468&fl=b578&fl=b2184")
+      #########################################
+      # API call for Sweatshirts category.
+      # Search with 'active' and 'hoodies' queries
+      #########################################
+      # build partial url
+      build_partial_url("&cat=girls-sweatshirts")
 
-      jackets_products = JSON.parse(sweatshirts_response.body)["products"]
+      # Add search query filter
+      @request_url += '&fts=active&fts=hoodies'
+
+      # Send request to Shopstyle.com
+      sweatshirts_by_query_response = HTTParty.get(@request_url)
+
+      # Collect products
+      sweatshirts_by_query_products = JSON.parse(sweatshirts_by_query_response.body)["products"]
+
+      jackets_products = sweatshirts_by_query_products
+
     elsif @style == 1 # Formal
+      #########################################
+      # API call for Sweaters category.
+      # Search with 'cardigan' query
+      #########################################
+      # build partial url
+      build_partial_url("&cat=girls-sweaters")
 
+      # Add search query filter
+      @request_url += '&fts=cardigan'
+
+      # Send request to Shopstyle.com
+      sweaters_by_query_response = HTTParty.get(@request_url)
+
+      # Collect products
+      sweaters_by_query_products = JSON.parse(sweaters_by_query_response.body)["products"]
+
+      jackets_products = sweaters_by_query_products
 
     elsif @style == 2 # Everyday
+      #########################################
+      # API call for Sweaters category.
+      # Search with no query
+      #########################################
+      # build partial url
+      build_partial_url("&cat=girls-sweaters")
+
+      # Send request to Shopstyle.com
+      sweaters_response = HTTParty.get(@request_url)
+
+      # Collect products
+      sweaters_products = JSON.parse(sweaters_response.body)["products"]
+
+      #########################################
+      # API call for Sweatshirts category.
+      # Search with no query
+      #########################################
+      # build partial url
+      build_partial_url("&cat=girls-sweatshirts")
+
+      # Send request to Shopstyle.com
+      sweatshirts_response = HTTParty.get(@request_url)
+
+      # Collect products
+      sweatshirts_products = JSON.parse(sweatshirts_response.body)["products"]
+
+      #########################
+      # Combine products
+      #########################
+      # Zip (interweave) products data into one array
+      jackets_products = sweatshirts_products.zip(sweaters_products).flatten.compact
 
     elsif @style == 3 # Play
 
     elsif @style == 4 # Trendy
+      #########################################
+      # API call for Sweaters category.
+      # Search with 'print' query
+      #########################################
+      # build partial url
+      build_partial_url("&cat=girls-sweaters")
+
+      # Add search query filter
+      @request_url += '&fts=print'
+
+      # Send request to Shopstyle.com
+      sweaters_by_query_response = HTTParty.get(@request_url)
+
+      # Collect products
+      sweaters_by_query_products = JSON.parse(sweaters_by_query_response.body)["products"]
+
+      jackets_products = sweaters_by_query_products
 
     else
       puts "ERROR. No style indicated"
     end
 
+    # Return an array of filtered products
     return jackets_products
   end
 
