@@ -80,7 +80,7 @@ class GirlsShopStyleAPI < ApplicationController
   end
 
   # Initialize
-  def initialize(style = 2, shirt_size = 6, pant_size = 6, jacket_size = 6, gender = "female", price = 50)
+  def initialize(style = 0, shirt_size = 6, pant_size = 6, jacket_size = 6, gender = "female", price = 50)
     @style       = style
     @shirt_size  = shirt_size
     @pant_size   = pant_size
@@ -100,14 +100,14 @@ class GirlsShopStyleAPI < ApplicationController
   # Polos, shirts, tees-and-tshirts
   def shirt_API_data
     if @style == 0 # Athletic
-      #####################
-      # API call for brands
-      #####################
+      ##########################################
+      # API call for Tees and Tshirts Category
+      # Search by brands: 'adidas' and 'nike'
+      ##########################################
       # build partial url
       build_partial_url("&cat=girls-tees-and-tshirts")
 
       # add brand filters
-      # adidas, nike, armour, and asics products
       @request_url += @@brand_ids[:adidas] + @@brand_ids[:nike] 
 
       # Send request to Shopstyle.com
@@ -117,13 +117,13 @@ class GirlsShopStyleAPI < ApplicationController
       tees_by_brand_products = JSON.parse(tees_by_brand_response.body)["products"]
 
       ##########################################
-      # API call for 'active' search term
+      # API call for Tees and Tshirt category
+      # Search by query: 'active'
       ##########################################
       # build partial url
       build_partial_url("&cat=girls-tees-and-tshirts")
 
       # add search query filter
-      # query = 'active'
       @request_url += "&fts=active"
 
       # Send request to Shopstyle.com
@@ -141,7 +141,7 @@ class GirlsShopStyleAPI < ApplicationController
     elsif @style == 1 # Formal
       ##################################################
       # API call for Dress category
-      # with 'sequin,' 'formal,' 'sparkling,' and 'lace' query
+      # Search by query: 'sequin,' 'formal,' 'sparkling,' and 'lace'
       ##################################################
       # build partial url
       build_partial_url("&cat=girls-dresses")
@@ -157,7 +157,7 @@ class GirlsShopStyleAPI < ApplicationController
 
       ##################################################
       # API call for Dress category
-      # with brand filter 'Aletta'
+      # Search by brand: 'Aletta'
       ##################################################
       # build partial url
       build_partial_url("&cat=girls-dresses")
@@ -180,13 +180,12 @@ class GirlsShopStyleAPI < ApplicationController
     elsif @style == 2 # Everyday
       ##########################################
       # API call for Shirts and Blouses category
-      # with query "tunic"
+      # Search by query: "tunic"
       ##########################################
       # build partial url
       build_partial_url("&cat=girls-shirts")
 
       # add search query filter
-      # query = 'active'
       @request_url += "&fts=tunic"
 
       # Send request to Shopstyle.com
@@ -197,7 +196,7 @@ class GirlsShopStyleAPI < ApplicationController
 
       ##########################################
       # API call for Polos category.
-      # Search without any filters
+      # Search all
       ##########################################
       # build partial url
       build_partial_url("&cat=girls-polos")
@@ -210,7 +209,7 @@ class GirlsShopStyleAPI < ApplicationController
 
       ##########################################
       # API call for Tees and Tshirts category.
-      # Search without any filters
+      # Search all
       ##########################################
       # build partial url
       build_partial_url("&cat=girls-tees-and-tshirts")
@@ -233,7 +232,7 @@ class GirlsShopStyleAPI < ApplicationController
     elsif @style == 4 # Trendy
       ##########################################
       # API call for Shirts and Blouses category.
-      # Search with 'denim' and 'blouse' queries
+      # Search by query: 'denim' and 'blouse'
       ##########################################
       # build partial url
       build_partial_url("&cat=girls-shirts")
@@ -249,7 +248,7 @@ class GirlsShopStyleAPI < ApplicationController
 
       ##########################################
       # API call for Tees and Tshirts category.
-      # Search with 'graphic' query
+      # Search by query: 'graphic'
       ##########################################
       # build partial url
       build_partial_url("&cat=girls-tees-and-tshirts")
@@ -275,24 +274,24 @@ class GirlsShopStyleAPI < ApplicationController
     return shirt_products
   end
 
+  ###########################################
+  ###########################################
   # Return Jackets API data
-  # Sweaters and sweatshirts
+  ###########################################
+  ########################################### 
+  # Sweaters and sweatshirts categories
   def jackets_API_data
     if @style == 0 # Athletic
       #########################################
       # API call for Sweatshirts category.
       # Search with 'active' and 'hoodies' queries
       #########################################
-      # build partial url
       build_partial_url("&cat=girls-sweatshirts")
 
-      # Add search query filter
       @request_url += '&fts=active&fts=hoodies'
 
-      # Send request to Shopstyle.com
       sweatshirts_by_query_response = HTTParty.get(@request_url)
 
-      # Collect products
       sweatshirts_by_query_products = JSON.parse(sweatshirts_by_query_response.body)["products"]
 
       jackets_products = sweatshirts_by_query_products
@@ -302,16 +301,12 @@ class GirlsShopStyleAPI < ApplicationController
       # API call for Sweaters category.
       # Search with 'cardigan' query
       #########################################
-      # build partial url
       build_partial_url("&cat=girls-sweaters")
 
-      # Add search query filter
       @request_url += '&fts=cardigan'
 
-      # Send request to Shopstyle.com
       sweaters_by_query_response = HTTParty.get(@request_url)
 
-      # Collect products
       sweaters_by_query_products = JSON.parse(sweaters_by_query_response.body)["products"]
 
       jackets_products = sweaters_by_query_products
@@ -321,26 +316,20 @@ class GirlsShopStyleAPI < ApplicationController
       # API call for Sweaters category.
       # Search with no query
       #########################################
-      # build partial url
       build_partial_url("&cat=girls-sweaters")
 
-      # Send request to Shopstyle.com
       sweaters_response = HTTParty.get(@request_url)
 
-      # Collect products
       sweaters_products = JSON.parse(sweaters_response.body)["products"]
 
       #########################################
       # API call for Sweatshirts category.
       # Search with no query
       #########################################
-      # build partial url
       build_partial_url("&cat=girls-sweatshirts")
 
-      # Send request to Shopstyle.com
       sweatshirts_response = HTTParty.get(@request_url)
 
-      # Collect products
       sweatshirts_products = JSON.parse(sweatshirts_response.body)["products"]
 
       #########################
@@ -356,16 +345,12 @@ class GirlsShopStyleAPI < ApplicationController
       # API call for Sweaters category.
       # Search with 'print' query
       #########################################
-      # build partial url
       build_partial_url("&cat=girls-sweaters")
 
-      # Add search query filter
       @request_url += '&fts=print'
 
-      # Send request to Shopstyle.com
       sweaters_by_query_response = HTTParty.get(@request_url)
 
-      # Collect products
       sweaters_by_query_products = JSON.parse(sweaters_by_query_response.body)["products"]
 
       jackets_products = sweaters_by_query_products
@@ -379,26 +364,158 @@ class GirlsShopStyleAPI < ApplicationController
   end
 
   # Return Bottoms API data
-  # Shorts, jeans, and pants
+  # Shorts, skirts, jeans, and pants categories used
   def bottoms_API_data
     if @style == 0 # Athletic
-      pants_response = HTTParty.get("http://api.shopstyle.com/api/v2/products?pid=#{PID}&fl=s#{CLOTHING_SIZES[@pant_size]}&fl=p20:#{SHOPSTYLE_PRICE_ID[@price]}&cat=boys-pants&sort=Popular&limit=50&fl=b422&fl=b14&fl=b468&fl=b578&fl=b2184")
+      
+      #########################################
+      # API call for Pants category.
+      # Search with 'active,' 'training,' 
+      # 'yoga,' 'athletic' query
+      #########################################
+      build_partial_url("&cat=girls-pants")
+
+      @request_url += '&fts=active&fts=training&fts=yoga&fts=athletic'
+
+      pants_by_query_response = HTTParty.get(@request_url)
+
+      pants_by_query_products = JSON.parse(pants_by_query_response.body)["products"]
+
+      #########################################
+      # API call for Shorts category.
+      # Search with 'active' and 'run' query
+      #########################################
+      build_partial_url("&cat=girls-shorts")
+
+      @request_url += '&fts=active&fts=run'
+
+      shorts_by_query_response = HTTParty.get(@request_url)
+
+      shorts_by_query_products = JSON.parse(shorts_by_query_response.body)["products"]
+
+      # Merge two products into one array
+      bottoms_products = shorts_by_query_products.zip(pants_by_query_products).flatten.compact
+
+    elsif @style == 1 # Formal
+      # None returned
+
+    elsif @style == 2 # Everyday
+      
+      #########################################
+      # API call for Jeans category.
+      # Search all. Limit output to 15
+      #########################################
+      build_partial_url("&cat=girls-jeans")
+
+      @request_url.sub! 'limit=50', 'limit=15'
+
+      jeans_response = HTTParty.get(@request_url)
+
+      jeans_products = JSON.parse(jeans_response.body)["products"]
+
+      #########################################
+      # API call for Pants category.
+      # Search all. Limit output to 15
+      #########################################
+      build_partial_url("&cat=girls-pants")
+
+      @request_url.sub! 'limit=50', 'limit=15'
+
+      pants_response = HTTParty.get(@request_url)
 
       pants_products = JSON.parse(pants_response.body)["products"]
 
-      shorts_response = HTTParty.get("http://api.shopstyle.com/api/v2/products?pid=#{PID}&fl=s#{CLOTHING_SIZES[@pant_size]}&fl=p20:#{SHOPSTYLE_PRICE_ID[@price]}&cat=boys-shortss&sort=Popular&limit=50&fl=b422&fl=b14&fl=b468&fl=b578&fl=b2184")
+      #########################################
+      # API call for Shorts category.
+      # Search query 'denim'. Limit output to 15
+      #########################################
+      build_partial_url("&cat=girls-shorts")
+
+      @request_url.sub! 'limit=50', 'limit=15'
+
+      @request_url += '&fts=denim'
+
+      shorts_response = HTTParty.get(@request_url)
 
       shorts_products = JSON.parse(shorts_response.body)["products"]
 
-      bottoms_products = shorts_products.zip(pants_products).flatten.compact
+      #########################################
+      # API call for Skirts category.
+      # Search all. Limit output to 15
+      #########################################
+      build_partial_url("&cat=girls-skirts")
 
-    elsif @style == 1 # Formal
+      @request_url.sub! 'limit=50', 'limit=15'
 
-    elsif @style == 2 # Everyday
+      skirts_response = HTTParty.get(@request_url)
+
+      skirts_products = JSON.parse(skirts_response.body)["products"]
+
+      # Merge products
+      bottoms_products = jeans_products.zip(pants_products).flatten.compact
+      bottoms_products = bottoms_products.zip(shorts_products).flatten.compact
+      bottoms_products = bottoms_products.zip(skirts_products).flatten.compact
 
     elsif @style == 3 # Play
 
     elsif @style == 4 # Trendy
+           
+      #########################################
+      # API call for Jeans category.
+      # Search all. Limit output to 15
+      #########################################
+      build_partial_url("&cat=girls-jeans")
+
+      @request_url.sub! 'limit=50', 'limit=15'
+
+      jeans_response = HTTParty.get(@request_url)
+
+      jeans_products = JSON.parse(jeans_response.body)["products"]
+
+      ############################################################
+      # API call for Pants category.
+      # Search by 'ponte' and 'leggings' query. Limit output to 15
+      #############################################################
+      build_partial_url("&cat=girls-pants")
+
+      @request_url.sub! 'limit=50', 'limit=15'
+
+      @request_url += '&fts=ponte&fts=leggings'
+
+      pants_response = HTTParty.get(@request_url)
+
+      pants_products = JSON.parse(pants_response.body)["products"]
+
+      #########################################
+      # API call for Shorts category.
+      # Search all. Limit output to 15
+      #########################################
+      build_partial_url("&cat=girls-shorts")
+
+      @request_url.sub! 'limit=50', 'limit=15'
+
+      shorts_response = HTTParty.get(@request_url)
+
+      shorts_products = JSON.parse(shorts_response.body)["products"]
+
+      #########################################
+      # API call for Skirts category.
+      # Search all. Limit output to 15
+      #########################################
+      build_partial_url("&cat=girls-skirts")
+
+      @request_url.sub! 'limit=50', 'limit=15'
+
+      @request_url += '&fts=tulle&fts=tiered&&fts=tutu'
+
+      skirts_response = HTTParty.get(@request_url)
+
+      skirts_products = JSON.parse(skirts_response.body)["products"]
+
+      # Merge products
+      bottoms_products = jeans_products.zip(pants_products).flatten.compact
+      bottoms_products = bottoms_products.zip(shorts_products).flatten.compact
+      bottoms_products = bottoms_products.zip(skirts_products).flatten.compact
 
     else
       puts "ERROR. No style indicated"
@@ -406,5 +523,4 @@ class GirlsShopStyleAPI < ApplicationController
 
     return bottoms_products
   end
-
 end  # end of module

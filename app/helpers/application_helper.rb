@@ -10,7 +10,7 @@ module ApplicationHelper
 # 	4 => "Trendy"
 # }
 
-# CLOTHING SIZES  = {
+# CLOTHING_SIZES  = {
 # 	0 => "0-3m",
 # 	1 => "3-6m",
 # 	2 => "6-9m",
