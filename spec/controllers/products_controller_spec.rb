@@ -1,11 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe ProductsController, :type => :controller do
-	 describe "GET index" do
-    it "returns http success" do
-      get :index
-      expect(response).to have_http_status(:success)
-    end
-  end
+	describe "GET #index" do
+		  
+	  it "responds successfully with an HTTP 200 status code" do
+	    get :new
+	    expect(response).to be_success
+	    expect(response).to have_http_status(200)
+	  end
+ end 
 
-end
+    it "renders the new template" do
+	  	get :new
+	  	expect(response).to render_template("new")
+  	end
+	end

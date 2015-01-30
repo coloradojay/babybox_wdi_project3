@@ -1,15 +1,16 @@
 class UsersController < ApplicationController
 
-	def index
-		@users = User.all
-	end 
-
-	def show 
-		@user = User.find(params[:id])
-	end
+	# def index
+	# 	@users = User.all
+	# end 
 
 	def new
 		@user = User.new
+	end
+
+
+	def show 
+		@user = User.find(params[:id])
 	end
 
 	def create
@@ -24,6 +25,10 @@ class UsersController < ApplicationController
 	end 
 
 	def edit
+		@user = User.find(params[:id])
+	end
+
+	def post
 		@user = User.find(params[:id])
 	end
 
@@ -47,7 +52,10 @@ class UsersController < ApplicationController
 	private 
 
 	def user_params
-			params.require(:user).permit()
-	endx
+			params.require(:user).permit(:first_name, :last_name, :ship_address_1, 
+				:ship_address_2, :ship_city, :ship_state, :ship_zip, :phone_number,
+				:bill_address_1, :bill_address_2, :bill_city, :bill_city, :bill_state,
+				:bill_zip, :email, :encrypted_password, :reset_password_token, :reset_password_sent_at)
+	end
 
 end
