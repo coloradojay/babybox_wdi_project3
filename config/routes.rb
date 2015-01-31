@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   devise_for :users, path: "user", path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', registration: 'register', edit: 'your_account', sign_up: 'cmon_let_me_in' }
   root 'static_pages#home'
   resources :boxes, except: :index
+<<<<<<< HEAD
   resources :products
+=======
+  resources :products, only: :new
+>>>>>>> a986d678d1c817de76da0bab5af2feb68bd52de8
   resources :users, except: :index
 
   # The priority is based upon order of creation: first created -> highest priority.
