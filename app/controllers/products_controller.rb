@@ -19,6 +19,8 @@ class ProductsController < ApplicationController
       #                 products_params[:gender],
       #                 products_params[:price])
       @call_api = ShopStyleAPI.new
+
+      #<%= image_tag thing["image"]["sizes"]["XLarge"]["url"] %>
     # else
       # @call_api = GirlsShopStyleAPI.new(
       #                 products_params[:style],
