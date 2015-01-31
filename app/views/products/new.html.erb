@@ -1,1 +1,117 @@
-<h1>Products To Go Here</h1>
+<div>
+	<div id="loading-spinner"></div>
+	<button id="submit">Review Order</button>
+
+	<button id="toggle-left-shirt"></button>
+	<button id="toggle-right-shirt"></button>
+	<div id="shirt_selector"></div>
+
+	<button id="toggle-left-jacket"></button>
+	<button id="toggle-right-jacket"></button>
+	<div id="jacket_selector"></div>
+
+	<button id="toggle-left-bottom"></button>
+	<button id="toggle-right-bottom"></button>
+	<div id="bottom_selector"></div>
+</div>
+
+<script>
+// $(document).ready(function() {
+$(function() {
+	// index count
+	var indexShirt  = 0;
+	var indexJacket = 0;
+	var indexBottom = 0;
+
+	var shirtProducts	= <%= raw @shirt_products.to_json %>;
+	// var jacketProducts 	= <%= raw @jacket_products.to_json %>;
+	// var bottomProducts 	= <%= raw @bottom_products.to_json %>;
+	console.log(shirtProducts.length)
+	// console.log(jacketProducts.length)
+	// console.log(bottomProducts.length)
+
+	$('#shirt_selector').append("<img src=" + shirtProducts[0].image.sizes.XLarge.url + ">");
+	// $('#jacket_selector').append("<img src=" + jacketProducts[0].image.sizes.XLarge.url + ">");
+	// $('#bottom_selector').append("<img src=" + bottomProducts[0].image.sizes.XLarge.url + ">");
+/******************************
+* Submit related stuff
+*******************************/	
+
+	$('#submit').click(function() {
+		console.log("submit")
+		var request = $.ajax({
+			type: 'GET',
+			url: '/products/show',
+			data: gather(),
+			success: function() {
+				location.href = "/products/show";
+			},
+			fail: function() {
+				alert("Something went wrong!")
+				location.href = '/';
+			}
+		});
+		
+	function gather() {
+		return { shirt_product: shirtProducts[indexShirt].id };
+	}
+
+/*********************************
+* End
+**********************************/
+
+	});
+
+	$( "#toggle-right-jacket" ).click(function() {
+		console.log("here")
+		if( i < jacketProducts.length) {
+					console.log("here")
+
+	  		$('#jacket_selector').empty();
+	  		i++;
+	  		$('#jacket_selector').append("<img src=" + jacketProducts[i].image.sizes.XLarge.url + ">");
+  		}
+	});
+
+	$( "#toggle-left-jacket" ).click(function() {
+ 		if(i >= 1) {
+ 			$('#jacket_selector').empty();
+	  		i--;
+	  		$('#jacket_selector').append("<img src=" + jacketProducts[i].image.sizes.XLarge.url + ">");
+  		}
+	});
+
+	$( "#toggle-right-shirt" ).click(function() {
+		if( i < shirtProducts.length) {
+	  		$('#shirt_selector').empty();
+	  		i++;
+	  		$('#shirt_selector').append("<img src=" + shirtProducts[i].image.sizes.XLarge.url + ">");
+  		}
+	});
+
+	$( "#toggle-left-shirt" ).click(function() {
+ 		if(i >= 1) {
+ 			$('#shirt_selector').empty();
+	  		i--;
+	  		$('#shirt_selector').append("<img src=" + shirtProducts[i].image.sizes.XLarge.url + ">");
+  		}
+	});
+
+	$( "#toggle-right-bottom" ).click(function() {
+		if( i < bottomProducts.length) {
+	  		$('#bottom_selector').empty();
+	  		i++;
+	  		$('#bottom_selector').append("<img src=" + bottomProducts[i].image.sizes.XLarge.url + ">");
+  		}
+	});
+
+	$( "#toggle-left-bottom" ).click(function() {
+ 		if(i >= 1) {
+ 			$('#bottom_selector').empty();
+	  		i--;
+	  		$('#bottom_selector').append("<img src=" + bottomProducts[i].image.sizes.XLarge.url + ">");
+  		}
+	});
+
+})
+</script>

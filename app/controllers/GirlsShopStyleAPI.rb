@@ -80,7 +80,7 @@ class GirlsShopStyleAPI < ApplicationController
   end
 
   # Initialize
-  def initialize(style = 0, shirt_size = 6, pant_size = 6, jacket_size = 6, gender = "female", price = 50)
+  def initialize(style = 2, shirt_size = 7, pant_size = 7, jacket_size = 7, gender = "female", price = 50)
     @style       = style
     @shirt_size  = shirt_size
     @pant_size   = pant_size
