@@ -61,7 +61,7 @@ class ShopStyleAPI < ApplicationController
   @@limit_to_50         = "&limit=50"
 
   # Initialize
-  def initialize(style = 1, shirt_size = 6, pant_size = 6, jacket_size = 6, gender = "male", price = 50)
+  def initialize(style = 0, shirt_size = 6, pant_size = 6, jacket_size = 6, gender = "male", price = 50)
     @style       = style
     @shirt_size  = shirt_size
     @pant_size   = pant_size
@@ -74,6 +74,7 @@ class ShopStyleAPI < ApplicationController
   # Return Shirts API data
   # Polos, shirts, tees-and-tshirts
   def shirt_API_data
+    logger.debug("FUCKING HERE")
     if @style == 0 # Athletic
       # build url for request
       request_url = @@base_url
@@ -259,7 +260,7 @@ class ShopStyleAPI < ApplicationController
 
         # add brand filters
         # oxford
-        request_url += "?fts=cardigan"
+        request_url += "&fts=cardigan"
 
         # Send request to Shopstyle.com
         tees_response = HTTParty.get(request_url)
@@ -285,7 +286,7 @@ class ShopStyleAPI < ApplicationController
 
         # add brand filters
         # crewneck
-        request_url += "?fts=crewneck"
+        request_url += "&fts=crewneck"
 
         # Send request to Shopstyle.com
         tees_response = HTTParty.get(request_url)
@@ -333,7 +334,7 @@ class ShopStyleAPI < ApplicationController
 
         # add brand filters
         # crewneck
-        request_url += "?fts=cardigan"
+        request_url += "&fts=cardigan"
 
         # Send request to Shopstyle.com
         tees_response = HTTParty.get(request_url)
@@ -368,7 +369,7 @@ class ShopStyleAPI < ApplicationController
       request_url += "&cat=boys-pants"
 
       # add search filter to url
-      request_url += "?fts=track"
+      request_url += "&fts=track"
 
       # add brand filters
       # adidas, nike, armour, and asics products
@@ -397,7 +398,7 @@ class ShopStyleAPI < ApplicationController
       request_url += "&cat=boys-pants"
 
       # add search filter to url
-      request_url += "?fts=suit-pants"
+      request_url += "&fts=suit-pants"
 
       # Send request to Shopstyle.com
       tees_response = HTTParty.get(request_url)
@@ -471,7 +472,7 @@ class ShopStyleAPI < ApplicationController
 
       # add search filter to url
       # chino, twill & casual
-      request_url += "?fts=chino+twill+casual"
+      request_url += "&fts=chino+twill+casual"
 
       # Send request to Shopstyle.com
       tees_response = HTTParty.get(request_url)
