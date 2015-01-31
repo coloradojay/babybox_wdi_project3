@@ -2,30 +2,37 @@
 
    <div class="container">
     <div class="row">
-       <div id="jacket_selector" class="col-md-4 box">JACKETS</div>
+       <div class="col-md-4 box">
+       		JACKETS
 
-       	<button id="toggle-left-shirt"></button>
-  		<button id="toggle-right-shirt"></button>
-       	<div id="shirt_selector" class="col-md-4 box"> SHIRTS</div>
-       	<div id="bottom_selector" class="col-md-4 box">PANTS</div>
+	       	<button id="toggle-left-jacket"></button>
+	  		<button id="toggle-right-jacket"></button>
+
+	  		<div id='jacket_image'></div>
+
+       </div>
+
+
+   		<div class="col-md-4 box">
+			SHIRTS
+
+	       	<button id="toggle-left-shirt"></button>
+	  		<button id="toggle-right-shirt"></button>
+
+	  		<div id='shirt_image'></div>
+
+		</div>
+
+
+       	<div class="col-md-4 box">
+       		PANTS
+
+	       	<button id="toggle-left-pant"></button>
+	  		<button id="toggle-right-pant"></button>
+
+	  		<div id='pant_image'></div>
+       	</div>
     </div>
-</div>
-
-
-<div>
-  <div id="loading-spinner"></div>
-  <button id="submit">Review Order</button>
-
-  <button id="toggle-left-shirt"></button>
-  <button id="toggle-right-shirt"></button>
-
-
-  <button id="toggle-left-jacket"></button>
-  <button id="toggle-right-jacket"></button>
-
-
-  <button id="toggle-left-bottom"></button>
-  <button id="toggle-right-bottom"></button>
 </div>
 
 <script>
@@ -43,7 +50,7 @@ $(function() {
   // console.log(jacketProducts.length)
   // console.log(bottomProducts.length)
 
-  $('#shirt_selector').append("<img src=" + shirtProducts[0].image.sizes.XLarge.url + ">");
+  $('#shirt_image').append("<img src=" + shirtProducts[0].image.sizes.XLarge.url + ">");
   // $('#jacket_selector').append("<img src=" + jacketProducts[0].image.sizes.XLarge.url + ">");
   // $('#bottom_selector').append("<img src=" + bottomProducts[0].image.sizes.XLarge.url + ">");
 /******************************
@@ -79,8 +86,8 @@ $(function() {
     if( indexJacket < jacketProducts.length) {
     	indexJacket++;
 
-        $('#jacket_selector').empty();
-        $('#jacket_selector').append("<img src=" + jacketProducts[indexJacket].image.sizes.XLarge.url + ">");
+        $('#jacket_image').empty();
+        $('#jacket_image').append("<img src=" + jacketProducts[indexJacket].image.sizes.XLarge.url + ">");
       }
   });
 
@@ -88,8 +95,8 @@ $(function() {
     if(indexJacket >= 1) {
     	indexJacket--;
 
-	    $('#jacket_selector').empty();
-        $('#jacket_selector').append("<img src=" + jacketProducts[indexJacket].image.sizes.XLarge.url + ">");
+	    $('#jacket_image').empty();
+        $('#jacket_image').append("<img src=" + jacketProducts[indexJacket].image.sizes.XLarge.url + ">");
       }
   });
 
@@ -97,8 +104,8 @@ $(function() {
     if( indexShirt < shirtProducts.length) {
     	indexShirt++;
 
-        $('#shirt_selector').empty();
-        $('#shirt_selector').append("<img src=" + shirtProducts[indexShirt].image.sizes.XLarge.url + ">");
+        $('#shirt_image').empty();
+        $('#shirt_image').append("<img src=" + shirtProducts[indexShirt].image.sizes.XLarge.url + ">");
       }
   });
 
@@ -106,8 +113,8 @@ $(function() {
     if(indexShirt >= 1) {
     	indexShirt--;
 
-      	$('#shirt_selector').empty();
-        $('#shirt_selector').append("<img src=" + shirtProducts[indexShirt].image.sizes.XLarge.url + ">");
+      	$('#shirt_image').empty();
+        $('#shirt_image').append("<img src=" + shirtProducts[indexShirt].image.sizes.XLarge.url + ">");
       }
   });
 
@@ -115,8 +122,8 @@ $(function() {
     if( indexBottom < bottomProducts.length) {
         indexBottom++;
 
-        $('#bottom_selector').empty();
-        $('#bottom_selector').append("<img src=" + bottomProducts[indexBottom].image.sizes.XLarge.url + ">");
+        $('#bottom_image').empty();
+        $('#bottom_image').append("<img src=" + bottomProducts[indexBottom].image.sizes.XLarge.url + ">");
       }
   });
 
@@ -124,8 +131,8 @@ $(function() {
     if(indexBottom >= 1) {
     	indexBottom--;
 
-      	$('#bottom_selector').empty();
-        $('#bottom_selector').append("<img src=" + bottomProducts[indexBottom].image.sizes.XLarge.url + ">");
+      	$('#bottom_image').empty();
+        $('#bottom_image').append("<img src=" + bottomProducts[indexBottom].image.sizes.XLarge.url + ">");
       }
   });
 
