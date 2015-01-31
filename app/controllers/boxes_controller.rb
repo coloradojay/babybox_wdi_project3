@@ -4,7 +4,7 @@ class BoxesController < ApplicationController
 	
 	def new
 		@box = Box.new
-		@asdf = GirlsShopStyleAPI.new()
+		# @asdf = GirlsShopStyleAPI.new()
 	end
 
 	def show
