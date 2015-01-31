@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe StaticPagesController, :type => :controller do
 
-  describe "GET index" do
+  describe "GET home" do
     it "returns http success" do
-      get :index
-      expect(response).to have_http_status(:success)
+      get :home
+      expect(response).to have_http_status(200)
     end
   end
 

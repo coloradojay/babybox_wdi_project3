@@ -22,8 +22,6 @@ class BoxesController < ApplicationController
 		end
 	end
 
-	
-
 	def update
 		@box = Post.find(params[:id])
 

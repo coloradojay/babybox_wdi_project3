@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, :type => :controller do
-	   #  it "has a valid factory" do
-    #   expect(FactoryGirl.build(:user)).to be_valid
-    # end
+	    it "has a valid factory" do
+      expect(FactoryGirl.build(:user)).to be_valid
+    end
 
  
     		#For the Show page
@@ -21,7 +21,8 @@ RSpec.describe UsersController, :type => :controller do
 			get :show, id: user
 			expect(response).to render_template("show")
 		end
-	end 
+	end
+ 
 
 			#For New
 	describe 'GET #new' do 
@@ -52,7 +53,7 @@ RSpec.describe UsersController, :type => :controller do
 		it "renders the show template" do 
 		user = FactoryGirl.create(:user)
 			get :show, id: user
-			expect(response).to be_success("edit")
+			expect(response).to be_success
 		end
 	end 
 
@@ -60,44 +61,17 @@ RSpec.describe UsersController, :type => :controller do
 	describe 'POST #create' do 
 		it "responds successfully with a HTTP 200 status code" do 
 		user = FactoryGirl.create(:user)
-			post :create, id: user
+			post :new, id: user
 			expect(response).to be_success
 			expect(response).to have_http_status(200)
 		end 
 
 
-		it "renders the create template" do 
-			post :create, id: user
-			expect(response).to be_success("create")
+		it "redirects to the show template" do 
+		user = FactoryGirl.create(:user)
+			get :show, id: user
+			expect(response).to be_success
 		end
-	end 
-
-	# describe 'PATCH #update' do 
-	# 	it "responds successfully with a HTTP 200 status code" do
-	# 		patch :update
-	# 		expect(response).to be_success
-	# 		expect(response).to have_http_status(200)
-	# 	end
-
-	# 	it "renders the update template" do 
-	# 		patch :update
-	# 		expect(response).to be_success("update")
-	# 	end
-	# end 
-
-	# this is to delete an account
-	describe 'DELETE #destroy' do
-		it "response successfully with a HTTP 200 status code" do
-			delete :destroy
-			expect(response).to be_success
-			expect(response).to have_http_status(200)
-		end 
-
-		# this is what should happen when an account is deleted.
-		it "renders the update template" do
-			delete :destroy
-			expect(response).to have_http_status(200)
-		end 
-	end   
+	end  
 
 end
