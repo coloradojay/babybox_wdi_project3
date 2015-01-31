@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150131040705) do
+ActiveRecord::Schema.define(version: 20150131213606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,13 +20,19 @@ ActiveRecord::Schema.define(version: 20150131040705) do
     t.string   "order_number"
     t.integer  "status"
     t.integer  "user_id"
-    t.integer  "product_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "boxes", ["product_id"], name: "index_boxes_on_product_id", using: :btree
   add_index "boxes", ["user_id"], name: "index_boxes_on_user_id", using: :btree
+
+  create_table "boxes_products", id: false, force: true do |t|
+    t.integer "box_id"
+    t.integer "product_id"
+  end
+
+  add_index "boxes_products", ["box_id"], name: "index_boxes_products_on_box_id", using: :btree
+  add_index "boxes_products", ["product_id"], name: "index_boxes_products_on_product_id", using: :btree
 
   create_table "products", force: true do |t|
     t.string   "name"
@@ -41,12 +47,9 @@ ActiveRecord::Schema.define(version: 20150131040705) do
     t.integer  "shoe_size"
     t.string   "sku"
     t.string   "brand"
-    t.integer  "box_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "products", ["box_id"], name: "index_products_on_box_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "first_name"

@@ -39,6 +39,10 @@ class BoxesController < ApplicationController
 		redirect_to root_path
 	end
 
+	def checkout
+		@box = Box.find(params[:id])
+	end
+
 	private
 	def box_params
 		params.require(:box).permit(:order_number,:status,:user_id,:child_id,:gender,:shirt_size,:pant_size,:jacket_size,:style)
