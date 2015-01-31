@@ -1,3 +1,4 @@
 class Product < ActiveRecord::Base
-	belongs_to :box
+	has_many :boxes
+	has_many :users, through: :boxes
 end

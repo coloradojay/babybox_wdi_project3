@@ -4,7 +4,7 @@ class BoxesController < ApplicationController
 	
 	def new
 		@box = Box.new
-		@asdf = GirlsShopStyleAPI.new()
+		@user = current_user
 	end
 
 	def show
@@ -13,7 +13,7 @@ class BoxesController < ApplicationController
 
 	def create
 		@box = Box.new(box_params)
-
+		@box.user = current_user
 		if @box.save
 			redirect_to boxes_path
 		else
@@ -41,7 +41,7 @@ class BoxesController < ApplicationController
 
 	private
 	def box_params
-		params.require(:box).permit(:order_number,:status,:user_id,:child_id)
+		params.require(:box).permit(:order_number,:status,:user_id,:child_id,:gender,:shirt_size,:pant_size,:jacket_size,:style)
 	end
 
 end
