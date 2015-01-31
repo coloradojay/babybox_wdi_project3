@@ -81,4 +81,12 @@ module ApplicationHelper
     }	
   end
 
+  def shopstyle_pricing 
+    [10,25,50,75,100,125,150,200,250,300,350]
+  end
+
+  def shopstyle_style
+    ["Athletic", "Formal", "Everyday", "Casual", "Trendy"]
+  end
+
 end

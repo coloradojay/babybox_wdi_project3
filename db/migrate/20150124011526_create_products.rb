@@ -17,8 +17,6 @@ class CreateProducts < ActiveRecord::Migration
 
       t.timestamps
     end
-    
-    add_index :products, :box_id
-    
+      add_index :products, :box_id
   end
 end

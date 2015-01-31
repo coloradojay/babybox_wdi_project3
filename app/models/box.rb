@@ -9,11 +9,8 @@ class Box < ActiveRecord::Base
 	}
 
 	belongs_to :user
-	belongs_to :child
-
-	has_many :products
+	belongs_to :product
 
 	validates :user, presence: true
-	validates :child, presence: true
 	
 end

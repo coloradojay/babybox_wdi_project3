@@ -55,7 +55,7 @@ class UsersController < ApplicationController
 			params.require(:user).permit(:first_name, :last_name, :ship_address_1, 
 				:ship_address_2, :ship_city, :ship_state, :ship_zip, :phone_number,
 				:bill_address_1, :bill_address_2, :bill_city, :bill_city, :bill_state,
-				:bill_zip, :email, :encrypted_password, :reset_password_token, :reset_password_sent_at)
+				:bill_zip, :email, :encrypted_password, :reset_password_token, :reset_password_sent_at, :gender, :shirt_size, :pant_size, :jacket_size, :style, :child)
 	end
 
 end
