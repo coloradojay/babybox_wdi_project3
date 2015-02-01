@@ -11,7 +11,7 @@ class BoxesController < ApplicationController
 	end
 
 	def show
-  	@box = Box.find(params[:id])
+  	@box = Box.find(current_user)
 	end
 
 	def create
@@ -68,7 +68,7 @@ class BoxesController < ApplicationController
 	end
 
 	def checkout
-		@box = Box.find(params[:id])
+		@box = Box.find(current_user)
 	end
 
 	private
