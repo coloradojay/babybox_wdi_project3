@@ -23,13 +23,13 @@ class ProductsController < ApplicationController
     
   end
 
-  def filters
-
+  def filter
+    logger.debug("in filter")
   end
 
   private
   def product_ids_params
-    params.require("product_ids").permit("shirt_id", "jacket_id", "bottom_id")
+    params.fetch("product_ids", {}).permit("shirt_id", "jacket_id", "bottom_id")
   end
 
 end
