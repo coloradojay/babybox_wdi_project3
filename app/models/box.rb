@@ -12,5 +12,10 @@ class Box < ActiveRecord::Base
 	has_and_belongs_to_many :products
 
 	validates :user, presence: true
+
+	# Customizing JSON
+	def as_json(options={})
+		# super(:only => [])
+	end
 	
 end
