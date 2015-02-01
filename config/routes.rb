@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :boxes, except: :index
 
   resources :products, only: [:index, :new, :show]
+  post "products/show" => "products#show"
   get "products/filter" => "products#filter"
 
   resources :users, except: :index
