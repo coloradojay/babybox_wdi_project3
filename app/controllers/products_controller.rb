@@ -14,8 +14,12 @@ class ProductsController < ApplicationController
 	end
 
   def show
-    logger.debug(params[:number])
-    @product = params["shirt_product"]
+    @product = product_ids_params
+  end
+
+  private
+  def product_ids_params
+    params.require("product_ids").permit("shirt_id", "jacket_id", "bottom_id")
   end
 
 end

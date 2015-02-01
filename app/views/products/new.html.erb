@@ -1,11 +1,14 @@
 <h1>Products</h1>
 
    <div class="container">
+   <%= form_tag("/products/show", method: "post", id:"id_form") do %>
+     <%= submit_tag(value="Review Order") %>
+   <% end %>
     <div class="row">
        <div class="col-md-4 box">
        		JACKETS
 
-	       	<button id="toggle-left-jacket"></button>
+	      <button id="toggle-left-jacket"></button>
 	  		<button id="toggle-right-jacket"></button>
 
 	  		<div id='jacket_image'></div>
@@ -25,14 +28,16 @@
 
 
        	<div class="col-md-4 box">
-       		PANTS
+       		Pants
 
-	       	<button id="toggle-left-pant"></button>
-	  		<button id="toggle-right-pant"></button>
+	       <button id="toggle-left-bottom"></button>
+	  		<button id="toggle-right-bottom"></button>
 
-	  		<div id='pant_image'></div>
+	  		<div id='bottom_image'></div>
        	</div>
     </div>
+
+    
 </div>
 
 <script>
@@ -43,97 +48,85 @@ $(function() {
   var indexJacket = 0;
   var indexBottom = 0;
 
-  var shirtProducts = <%= raw @shirt_products.to_json %>;
-  // var jacketProducts   = <%= raw @jacket_products.to_json %>;
-  // var bottomProducts   = <%= raw @bottom_products.to_json %>;
-  console.log(shirtProducts.length)
-  // console.log(jacketProducts.length)
-  // console.log(bottomProducts.length)
+  var shirtProducts    = <%= raw @shirt_products.to_json %>;
+  var jacketProducts   = <%= raw @jacket_products.to_json %>;
+  var bottomProducts   = <%= raw @bottom_products.to_json %>;
 
+  /**************************************************
+  * On document load, load first images of products
+  ***************************************************/  
   $('#shirt_image').append("<img src=" + shirtProducts[0].image.sizes.XLarge.url + ">");
-  // $('#jacket_selector').append("<img src=" + jacketProducts[0].image.sizes.XLarge.url + ">");
-  // $('#bottom_selector').append("<img src=" + bottomProducts[0].image.sizes.XLarge.url + ">");
-/******************************
-* Submit related stuff
-*******************************/  
+  $('#id_form').append("<input id='hidden_shirt_id' type='hidden' name='product_ids[shirt_id]' value=" + shirtProducts[0].id + ">");
+  
+  $('#jacket_image').append("<img src=" + jacketProducts[0].image.sizes.XLarge.url + ">");
+  $('#id_form').append("<input id='hidden_jacket_id' type='hidden' name='product_ids[jacket_id]' value=" + jacketProducts[0].id + ">");
 
-  $('#submit').click(function() {
-    console.log("submit")
-    var request = $.ajax({
-      type: 'GET',
-      url: '/products/show',
-      data: gather(),
-      success: function() {
-        location.href = "/products/show";
-      },
-      fail: function() {
-        alert("Something went wrong!")
-        location.href = '/';
-      }
-    });
-    
-  function gather() {
-    return { shirt_product: shirtProducts[indexShirt].id };
+  $('#bottom_image').append("<img src=" + bottomProducts[0].image.sizes.XLarge.url + ">");
+  $('#id_form').append("<input id='hidden_bottom_id' type='hidden' name='product_ids[bottom_id]' value=" + bottomProducts[0].id + ">");
+
+
+  /**************************************************
+  * Update images and hidden field values
+  ***************************************************/ 
+  function update(image_id, productsArray, index) {
+    $(image_id).empty();
+    $(image_id).append("<img src=" + productsArray[index].image.sizes.XLarge.url + ">");
+
+    if(productsArray === shirtProducts)
+      $('#hidden_shirt_id').attr("value", "product_ids[" + shirtProducts[index].id + "]")
+    else if(productsArray === jacketProducts)
+      $('#jacket_shirt_id').attr("value", "product_ids[" + jacketProducts[index].id + "]")
+    else
+      $('#bottom_shirt_id').attr("value", "product_ids[" + bottomProducts[index].id + "]")
   }
 
-/*********************************
-* End
-**********************************/
 
-  });
-
+  /**************************************************
+  * Toggle through images click functions
+  ***************************************************/  
+  // Jacket Images
   $( "#toggle-right-jacket" ).click(function() {
     if( indexJacket < jacketProducts.length) {
     	indexJacket++;
-
-        $('#jacket_image').empty();
-        $('#jacket_image').append("<img src=" + jacketProducts[indexJacket].image.sizes.XLarge.url + ">");
-      }
+      update('#jacket_image', jacketProducts, indexJacket)
+    }
   });
 
   $( "#toggle-left-jacket" ).click(function() {
     if(indexJacket >= 1) {
     	indexJacket--;
-
-	    $('#jacket_image').empty();
-        $('#jacket_image').append("<img src=" + jacketProducts[indexJacket].image.sizes.XLarge.url + ">");
-      }
+      update('#jacket_image', jacketProducts, indexJacket)
+    }
   });
 
+  // Shirt Images
   $( "#toggle-right-shirt" ).click(function() {
     if( indexShirt < shirtProducts.length) {
-    	indexShirt++;
-
-        $('#shirt_image').empty();
-        $('#shirt_image').append("<img src=" + shirtProducts[indexShirt].image.sizes.XLarge.url + ">");
-      }
+      indexShirt++;
+      update('#shirt_image', shirtProducts, indexShirt)
+    }
   });
 
   $( "#toggle-left-shirt" ).click(function() {
     if(indexShirt >= 1) {
     	indexShirt--;
-
-      	$('#shirt_image').empty();
-        $('#shirt_image').append("<img src=" + shirtProducts[indexShirt].image.sizes.XLarge.url + ">");
-      }
+      update('#shirt_image', shirtProducts, indexShirt)
+    }
   });
 
+  // Bottoms Images
   $( "#toggle-right-bottom" ).click(function() {
     if( indexBottom < bottomProducts.length) {
         indexBottom++;
-
-        $('#bottom_image').empty();
-        $('#bottom_image').append("<img src=" + bottomProducts[indexBottom].image.sizes.XLarge.url + ">");
-      }
+        update('#bottom_image', bottomProducts, indexBottom)
+    }
   });
 
   $( "#toggle-left-bottom" ).click(function() {
     if(indexBottom >= 1) {
     	indexBottom--;
-
-      	$('#bottom_image').empty();
-        $('#bottom_image').append("<img src=" + bottomProducts[indexBottom].image.sizes.XLarge.url + ">");
-      }
+      update('#bottom_image', bottomProducts, indexBottom)
+    }
   });
 
 })
