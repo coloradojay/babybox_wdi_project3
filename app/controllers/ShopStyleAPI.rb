@@ -55,6 +55,12 @@ class ShopStyleAPI < ApplicationController
     childrens_place: "&fl=b3872"
   }
 
+  def self.product_info(product_id)
+    @@response = HTTParty.get("http://api.shopstyle.com/api/v2/products/#{product_id}?pid=#{PID}")
+    JSON.parse(@@response.body)    
+  end  
+
+
   @@base_url            = "http://api.shopstyle.com/api/v2/products?pid=#{PID}"
   @@base_price_filter   = "&fl=p20:"
   @@sort_by_popular     = "&sort=Popular"
