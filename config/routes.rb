@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   root 'static_pages#home'
   resources :boxes, except: :index
 
-  resources :products, only: [:index, :new, :show]
+  resources :products, only: [:index, :new]
+  post "products/show" => "products#show"
   get "products/filter" => "products#filter"
 
   resources :users, except: :index
