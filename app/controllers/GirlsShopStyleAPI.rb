@@ -145,6 +145,7 @@ class GirlsShopStyleAPI < ApplicationController
       # Zip (interweave) products data into one array
       shirt_products = tees_by_brand_products.zip(tees_by_query_products).flatten.compact
 
+
     elsif @style == 1 # Formal
       ##################################################
       # API call for Dress category
