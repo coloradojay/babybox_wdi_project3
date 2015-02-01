@@ -73,11 +73,11 @@ $(function() {
     $(image_id).append("<img src=" + productsArray[index].image.sizes.XLarge.url + ">");
 
     if(productsArray === shirtProducts)
-      $('#hidden_shirt_id').attr("value", "product_ids[" + shirtProducts[index].id + "]")
+      $('#hidden_shirt_id').attr("value", shirtProducts[index].id)
     else if(productsArray === jacketProducts)
-      $('#jacket_shirt_id').attr("value", "product_ids[" + jacketProducts[index].id + "]")
+      $('#hidden_jacket_id').attr("value", jacketProducts[index].id)
     else
-      $('#bottom_shirt_id').attr("value", "product_ids[" + bottomProducts[index].id + "]")
+      $('#hidden_bottom_id').attr("value", bottomProducts[index].id)
   }
 
 
