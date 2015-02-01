@@ -105,7 +105,7 @@ class GirlsShopStyleAPI < ApplicationController
   #################################
   # Return Shirts API data
   # Polos, shirts, tees-and-tshirts
-  def shirt_api_data
+  def shirts_API_data
     if @style == 0 # Athletic
       ##########################################
       # API call for Tees and Tshirts Category
