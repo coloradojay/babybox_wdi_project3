@@ -4,7 +4,11 @@ class BoxesController < ApplicationController
 	
 	def new
 		@box = Box.new
+<<<<<<< HEAD
+		# @asdf = GirlsShopStyleAPI.new()
+=======
 		@user = current_user
+>>>>>>> 86e4ea310a4b09680d8dfef1bc5be3c52d743962
 	end
 
 	def show
