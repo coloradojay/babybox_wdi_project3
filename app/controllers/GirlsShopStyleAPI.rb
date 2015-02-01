@@ -105,7 +105,7 @@ class GirlsShopStyleAPI < ApplicationController
   #################################
   # Return Shirts API data
   # Polos, shirts, tees-and-tshirts
-  def shirt_API_data
+  def shirt_api_data
     if @style == 0 # Athletic
       ##########################################
       # API call for Tees and Tshirts Category
@@ -131,7 +131,7 @@ class GirlsShopStyleAPI < ApplicationController
       build_partial_url("&cat=girls-tees-and-tshirts")
 
       # add search query filter
-      @request_url += "&fts=active"
+      @request_url += "?fts=active"
 
       # Send request to Shopstyle.com
       tees_by_query_response = HTTParty.get(@request_url)
@@ -152,7 +152,7 @@ class GirlsShopStyleAPI < ApplicationController
       # Search by query: 'sequin,' 'formal,' 'sparkling,' and 'lace'
       ##################################################
       # build partial url
-      build_partial_url("&cat=girls-dresses")
+      build_partial_url("&cat=girls-shirts")
 
       # add search query filter
       @request_url += "&fts=sequin&fts=formal&fts=sparkling&fts=lace"
@@ -168,7 +168,7 @@ class GirlsShopStyleAPI < ApplicationController
       # Search by brand: 'Aletta'
       ##################################################
       # build partial url
-      build_partial_url("&cat=girls-dresses")
+      build_partial_url("&cat=girls-shirts")
 
       # add brand filter
       @request_url += "&fl=b2582"
