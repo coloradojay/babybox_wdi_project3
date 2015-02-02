@@ -69,7 +69,7 @@ class GirlsShopStyleAPI < ApplicationController
   @@sort_by_popular     = "&sort=Popular"
   @@limit_to_50         = "&limit=50"
 
-  def build_partial_url(category)
+  def build_partial_url(category, size)
     # build url for request
     @request_url = @@base_url
     @request_url += @@sort_by_popular
@@ -80,7 +80,7 @@ class GirlsShopStyleAPI < ApplicationController
     @request_url += SHOPSTYLE_PRICE_ID[@price].to_s
 
     # add size filter
-    @request_url += "&fl=s#{CLOTHING_SIZES[@shirt_size]}"
+    @request_url += "&fl=s#{CLOTHING_SIZES[size]}"
 
     # add category
     @request_url += category
@@ -88,14 +88,25 @@ class GirlsShopStyleAPI < ApplicationController
 
   # Initialize
   def initialize(style = 0, shirt_size = 6, pant_size = 6, jacket_size = 6, gender = "female", price = 50)
-    @style       = style
-    @shirt_size  = shirt_size
-    @pant_size   = pant_size
-    @jacket_size = jacket_size
+    @style       = style.to_i
+    @shirt_size  = shirt_size.to_i
+    @pant_size   = pant_size.to_i
+    @jacket_size = jacket_size.to_i
     @gender      = gender
-    @price       = price
+    @price       = price.to_i
   end
 
+  def style
+    @style
+  end
+
+  def shirt_size
+    @shirt_size
+  end
+
+  def price
+    @price
+  end
 
   #################################
   # Methods(3) for API hits
@@ -112,7 +123,7 @@ class GirlsShopStyleAPI < ApplicationController
       # Search by brands: 'adidas' and 'nike'
       ##########################################
       # build partial url
-      build_partial_url("&cat=girls-tees-and-tshirts")
+      build_partial_url("&cat=girls-tees-and-tshirts", @shirt_size)
 
       # add brand filters
       @request_url += @@brand_ids[:adidas] + @@brand_ids[:nike] 
@@ -128,10 +139,10 @@ class GirlsShopStyleAPI < ApplicationController
       # Search by query: 'active'
       ##########################################
       # build partial url
-      build_partial_url("&cat=girls-tees-and-tshirts")
+      build_partial_url("&cat=girls-tees-and-tshirts", @shirt_size)
 
       # add search query filter
-      @request_url += "?fts=active"
+      @request_url += "&fts=active"
 
       # Send request to Shopstyle.com
       tees_by_query_response = HTTParty.get(@request_url)
@@ -152,7 +163,7 @@ class GirlsShopStyleAPI < ApplicationController
       # Search by query: 'sequin,' 'formal,' 'sparkling,' and 'lace'
       ##################################################
       # build partial url
-      build_partial_url("&cat=girls-shirts")
+      build_partial_url("&cat=girls-shirts", @shirt_size)
 
       # add search query filter
       @request_url += "&fts=sequin&fts=formal&fts=sparkling&fts=lace"
@@ -168,7 +179,7 @@ class GirlsShopStyleAPI < ApplicationController
       # Search by brand: 'Aletta'
       ##################################################
       # build partial url
-      build_partial_url("&cat=girls-shirts")
+      build_partial_url("&cat=girls-shirts", @shirt_size)
 
       # add brand filter
       @request_url += "&fl=b2582"
@@ -191,7 +202,7 @@ class GirlsShopStyleAPI < ApplicationController
       # Search by query: "tunic"
       ##########################################
       # build partial url
-      build_partial_url("&cat=girls-shirts")
+      build_partial_url("&cat=girls-shirts", @shirt_size)
 
       # add search query filter
       @request_url += "&fts=tunic"
@@ -207,7 +218,7 @@ class GirlsShopStyleAPI < ApplicationController
       # Search all
       ##########################################
       # build partial url
-      build_partial_url("&cat=girls-polos")
+      build_partial_url("&cat=girls-polos", @shirt_size)
 
       # Send request to Shopstyle.com
       polos_by_query_response = HTTParty.get(@request_url)
@@ -220,7 +231,7 @@ class GirlsShopStyleAPI < ApplicationController
       # Search all
       ##########################################
       # build partial url
-      build_partial_url("&cat=girls-tees-and-tshirts")
+      build_partial_url("&cat=girls-tees-and-tshirts", @shirt_size)
 
       # Send request to Shopstyle.com
       tees_response = HTTParty.get(@request_url)
@@ -243,7 +254,7 @@ class GirlsShopStyleAPI < ApplicationController
       # Search by query: 'denim' and 'blouse'
       ##########################################
       # build partial url
-      build_partial_url("&cat=girls-shirts")
+      build_partial_url("&cat=girls-shirts", @shirt_size)
 
       # Add search query filter
       @request_url += '&fts=denim&fts=blouse'
@@ -259,7 +270,7 @@ class GirlsShopStyleAPI < ApplicationController
       # Search by query: 'graphic'
       ##########################################
       # build partial url
-      build_partial_url("&cat=girls-tees-and-tshirts")
+      build_partial_url("&cat=girls-tees-and-tshirts", @shirt_size)
 
       # Add search query filter
       @request_url += '&fts=graphic'
@@ -294,7 +305,7 @@ class GirlsShopStyleAPI < ApplicationController
       # API call for Sweatshirts category.
       # Search with 'active' and 'hoodies' queries
       #########################################
-      build_partial_url("&cat=girls-sweatshirts")
+      build_partial_url("&cat=girls-sweatshirts", @jacket_size)
 
       @request_url += '&fts=active&fts=hoodies'
 
@@ -309,7 +320,7 @@ class GirlsShopStyleAPI < ApplicationController
       # API call for Sweaters category.
       # Search with 'cardigan' query
       #########################################
-      build_partial_url("&cat=girls-sweaters")
+      build_partial_url("&cat=girls-sweaters", @jacket_size)
 
       @request_url += '&fts=cardigan'
 
@@ -324,7 +335,7 @@ class GirlsShopStyleAPI < ApplicationController
       # API call for Sweaters category.
       # Search with no query
       #########################################
-      build_partial_url("&cat=girls-sweaters")
+      build_partial_url("&cat=girls-sweaters", @jacket_size)
 
       sweaters_response = HTTParty.get(@request_url)
 
@@ -334,7 +345,7 @@ class GirlsShopStyleAPI < ApplicationController
       # API call for Sweatshirts category.
       # Search with no query
       #########################################
-      build_partial_url("&cat=girls-sweatshirts")
+      build_partial_url("&cat=girls-sweatshirts", @jacket_size)
 
       sweatshirts_response = HTTParty.get(@request_url)
 
@@ -353,7 +364,7 @@ class GirlsShopStyleAPI < ApplicationController
       # API call for Sweaters category.
       # Search with 'print' query
       #########################################
-      build_partial_url("&cat=girls-sweaters")
+      build_partial_url("&cat=girls-sweaters", @jacket_size)
 
       @request_url += '&fts=print'
 
@@ -381,7 +392,7 @@ class GirlsShopStyleAPI < ApplicationController
       # Search with 'active,' 'training,' 
       # 'yoga,' 'athletic' query
       #########################################
-      build_partial_url("&cat=girls-pants")
+      build_partial_url("&cat=girls-pants", @pant_size)
 
       @request_url += '&fts=active&fts=training&fts=yoga&fts=athletic'
 
@@ -393,7 +404,7 @@ class GirlsShopStyleAPI < ApplicationController
       # API call for Shorts category.
       # Search with 'active' and 'run' query
       #########################################
-      build_partial_url("&cat=girls-shorts")
+      build_partial_url("&cat=girls-shorts", @pant_size)
 
       @request_url += '&fts=active&fts=run'
 
@@ -413,7 +424,7 @@ class GirlsShopStyleAPI < ApplicationController
       # API call for Jeans category.
       # Search all. Limit output to 15
       #########################################
-      build_partial_url("&cat=girls-jeans")
+      build_partial_url("&cat=girls-jeans", @pant_size)
 
       @request_url.sub! 'limit=50', 'limit=15'
 
@@ -425,7 +436,7 @@ class GirlsShopStyleAPI < ApplicationController
       # API call for Pants category.
       # Search all. Limit output to 15
       #########################################
-      build_partial_url("&cat=girls-pants")
+      build_partial_url("&cat=girls-pants", @pant_size)
 
       @request_url.sub! 'limit=50', 'limit=15'
 
@@ -437,7 +448,7 @@ class GirlsShopStyleAPI < ApplicationController
       # API call for Shorts category.
       # Search query 'denim'. Limit output to 15
       #########################################
-      build_partial_url("&cat=girls-shorts")
+      build_partial_url("&cat=girls-shorts", @pant_size)
 
       @request_url.sub! 'limit=50', 'limit=15'
 
@@ -451,7 +462,7 @@ class GirlsShopStyleAPI < ApplicationController
       # API call for Skirts category.
       # Search all. Limit output to 15
       #########################################
-      build_partial_url("&cat=girls-skirts")
+      build_partial_url("&cat=girls-skirts", @pant_size)
 
       @request_url.sub! 'limit=50', 'limit=15'
 
@@ -472,7 +483,7 @@ class GirlsShopStyleAPI < ApplicationController
       # API call for Jeans category.
       # Search all. Limit output to 15
       #########################################
-      build_partial_url("&cat=girls-jeans")
+      build_partial_url("&cat=girls-jeans", @pant_size)
 
       @request_url.sub! 'limit=50', 'limit=15'
 
@@ -484,7 +495,7 @@ class GirlsShopStyleAPI < ApplicationController
       # API call for Pants category.
       # Search by 'ponte' and 'leggings' query. Limit output to 15
       #############################################################
-      build_partial_url("&cat=girls-pants")
+      build_partial_url("&cat=girls-pants", @pant_size)
 
       @request_url.sub! 'limit=50', 'limit=15'
 
@@ -498,7 +509,7 @@ class GirlsShopStyleAPI < ApplicationController
       # API call for Shorts category.
       # Search all. Limit output to 15
       #########################################
-      build_partial_url("&cat=girls-shorts")
+      build_partial_url("&cat=girls-shorts", @pant_size)
 
       @request_url.sub! 'limit=50', 'limit=15'
 
@@ -510,7 +521,7 @@ class GirlsShopStyleAPI < ApplicationController
       # API call for Skirts category.
       # Search all. Limit output to 15
       #########################################
-      build_partial_url("&cat=girls-skirts")
+      build_partial_url("&cat=girls-skirts", @pant_size)
 
       @request_url.sub! 'limit=50', 'limit=15'
 
