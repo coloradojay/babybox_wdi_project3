@@ -134,7 +134,8 @@ class GirlsShopStyleAPI < ApplicationController
 
       # Collect products
       tees_by_brand_products = JSON.parse(tees_by_brand_response.body)["products"]
-
+puts tees_by_brand_products
+puts "CHECK CHECK"
       ##########################################
       # API call for Tees and Tshirt category
       # Search by query: 'active'
