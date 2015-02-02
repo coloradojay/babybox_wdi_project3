@@ -3,46 +3,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="row">
-					<div class="col-md-6">
-						<h1>Select for Boys</h1>
-						<%= form_for :product, url: '/products/new', :html => { method: :get}  do |f| %>
-						<div>
-							<%= f.label "Select a Shirt Size" %>
-							<%= f.select :shirt_size, SIZE %>
-						</div>
-
-						<div>
-							<%= f.label "Select a Pants Size" %>
-							<%= f.select :pants_size, SIZE %>
-						</div>
-
-						<div>
-							<%= f.label "Select a Jacket Size" %>
-							<%= f.select :jacket_size, SIZE %>
-						</div>
-
-						<div>
-							<%= f.label "Select a Style" %>
-							<%= f.select :style, STYLE %>
-						</div>
-
-						<div>
-							<%= f.label "Select Max Price for each Piece" %>
-							<%= f.select :price, PRICE %>
-						</div>
-
-						<div>
-							<%= f.label "Select a Gender" %>
-							<%= f.select :gender, GENDER %>
-						</div>
-
-						<div>
-							<%= f.submit "Let's Starting Building Your Box", :class => "btn btn-primary" %>
-
-						</div>
-						<% end %>
-					</div>
-					<div class="col-md-6">
+					<div class="col-md-6 col-md-offset-3 text-center">
 						<h1>Select for Girls</h1>
 						<%= form_for :product, url: '/products/new', :html => { method: :get} do |f| %>
 						<div>
