@@ -6,8 +6,11 @@
 	        <div class="panel-heading">
 	          <div class="panel-title">
 	            <div class="row">
-	              <div class="col-xs-6">
+	              <div class="col-md-6">
 	                <h5><span class="glyphicon glyphicon-shopping-cart"></span> Review Your Box</h5>
+	              </div>
+	              <div class="col-md-3 col-md-offset-6">
+	              	<button id='checkout'>Proceed to Checkout</button>
 	              </div>
 	            </div>
 	          </div>
@@ -36,10 +39,6 @@
 										<%= @bottom_info["brandedName"] %>
 		  							</div>
 		  					</div>
-
-	       	 		<%= form_tag("/products/create", method: "post", id:"id_form") do %>
-	     				<%= submit_tag(value="Proceed to Checkout") %>
-	        		<% end %>
 		        </div>
 	      	</div>
 				</div>
