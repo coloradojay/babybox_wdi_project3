@@ -16,7 +16,11 @@ gem 'devise'
 # Rails Admin
 gem 'rails_admin'
 
+# Heroku rails adapter
+gem 'rails_12factor'
 
+# Use Thin server
+gem 'thin', group: :production
 # Secure security credentials and keys
 gem 'figaro'
 
