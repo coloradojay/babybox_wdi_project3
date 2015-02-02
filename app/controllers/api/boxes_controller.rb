@@ -14,13 +14,20 @@ module API
     end
 
     def show_first_ten
+      product_img_urls = []
       boxes = Box.last(10).reverse
 
-      products = {}
+      boxes.each do |box|
+        box_products = box.products
+        tempArr = []
 
-      prdoucts
+        box_products.each do |product|
+          tempArr.push(product.image_url)
+        end
+        product_img_urls.push(tempArr)
+      end
 
-      respond_with boxes
+      respond_with product_img_urls
     end
   end
 end
