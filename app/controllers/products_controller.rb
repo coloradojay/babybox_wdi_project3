@@ -14,17 +14,12 @@ class ProductsController < ApplicationController
     session[:gender]       = filters_params[:gender]
     session[:style]        = filters_params[:style].to_i
     
-		# call_api = GirlsShopStyleAPI.new
+    call_api = GirlsShopStyleAPI.new(filters_params[:style],filters_params[:shirt_size],filters_params[:pants_size],filters_params[:jacket_size],filters_params[:gender],filters_params[:price]) if filters_params[:gender] == "girl"
 
-    # Athletic 
-    call_api = GirlsShopStyleAPI.new(0,filters_params[:shirt_size],filters_params[:pants_size],filters_params[:jacket_size],"female",25)
+    call_api = ShopStyleAPI.new(filters_params[:style],filters_params[:shirt_size],filters_params[:pants_size],filters_params[:jacket_size],filters_params[:gender],filters_params[:price]) if filters_params[:gender] == "boy"
 
-    # call_api = GirlsShopStyleAPI.new(params[:style],params[:shirt_size],params[:pants_size],params[:jacket_size],params[:gender],params[:price]) if params[:gender] == "girl"
-    # call_api = ShopStyleAPI.new(params[:style],params[:shirt_size],params[:pants_size],params[:jacket_size],params[:gender],params[:price]) if params[:gender] == "boy"
-
-    @product = Product.new
-    @jacket_products  = call_api.jackets_API_data
-    @shirt_products   = call_api.shirts_API_data
+    @jacket_products  = call_api.jacket_API_data
+    @shirt_products   = call_api.shirt_API_data
     @bottom_products  = call_api.bottoms_API_data
 	end
 

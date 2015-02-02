@@ -14,9 +14,7 @@ class GirlsShopStyleAPI < ApplicationController
     5 => 323, # "2T"
     6 => 351, # "3T"
     7 => 352, # "4T"
-    8 => 377, # "5T"
-    9 => 377, # "6T"
-    10 => "X-Small"
+    8 => 377 # "5T"
   }
 
   # Price => ID
@@ -63,8 +61,8 @@ class GirlsShopStyleAPI < ApplicationController
   end  
 
 
+  # Variables to build url for API call
   @request_url
-
   @@base_url            = "http://api.shopstyle.com/api/v2/products?pid=#{PID}"
   @@base_price_filter   = "&fl=p20:"
   @@sort_by_popular     = "&sort=Popular"
@@ -97,27 +95,15 @@ class GirlsShopStyleAPI < ApplicationController
     @price       = price.to_i
   end
 
-  def style
-    @style
-  end
-
-  def shirt_size
-    @shirt_size
-  end
-
-  def price
-    @price
-  end
-
   #################################
-  # Methods(3) for API hits
-  #   shirt_API_data()
-  #   jackets_API_data()
-  #   bottoms_API_data()
+  # Methods(3) for API calls
+  #   shirt_API_data
+  #   jacket_API_data
+  #   bottoms_API_data
   #################################
   # Return Shirts API data
   # Polos, shirts, tees-and-tshirts
-  def shirts_API_data
+  def shirt_API_data
     if @style == 0 # Athletic
       ##########################################
       # API call for Tees and Tshirts Category
@@ -130,12 +116,12 @@ class GirlsShopStyleAPI < ApplicationController
       @request_url += @@brand_ids[:adidas] + @@brand_ids[:nike] 
 
       # Send request to Shopstyle.com
-      tees_by_brand_response = HTTParty.get(@request_url)
+      brand_response = HTTParty.get(@request_url)
 
       # Collect products
-      tees_by_brand_products = JSON.parse(tees_by_brand_response.body)["products"]
-puts tees_by_brand_products
-puts "CHECK CHECK"
+
+      brand_products = JSON.parse(brand_response.body)["products"]
+
       ##########################################
       # API call for Tees and Tshirt category
       # Search by query: 'active'
@@ -147,17 +133,26 @@ puts "CHECK CHECK"
       @request_url += "&fts=active"
 
       # Send request to Shopstyle.com
-      tees_by_query_response = HTTParty.get(@request_url)
+      active_response = HTTParty.get(@request_url)
 
       # Collect products
-      tees_by_query_products = JSON.parse(tees_by_query_response.body)["products"]
+      active_products = JSON.parse(active_response.body)["products"]
 
       #########################
       # Combine products
       #########################
       # Zip (interweave) products data into one array
-      shirt_products = tees_by_brand_products.zip(tees_by_query_products).flatten.compact
-
+      if !active_products.nil? && !brand_products.nil?
+        if active_products.length >= brand_products.length
+          shirt_products = active_products.zip(brand_products).flatten.compact
+        elsif
+          shirt_products = brand_products.zip(active_products).flatten.compact
+        end
+      elsif !active_products.nil?
+          shirt_products = active_products
+      else
+          shirt_products = brand_products
+      end
 
     elsif @style == 1 # Formal
       ##################################################
@@ -171,10 +166,10 @@ puts "CHECK CHECK"
       @request_url += "&fts=sequin&fts=formal&fts=sparkling&fts=lace"
 
       # Send request to Shopstyle.com
-      dresses_by_query_response = HTTParty.get(@request_url)
+      query_response = HTTParty.get(@request_url)
 
       # Collect products
-      dresses_by_query_products = JSON.parse(dresses_by_query_response.body)["products"]
+      query_products = JSON.parse(query_response.body)["products"]
 
       ##################################################
       # API call for Dress category
@@ -187,16 +182,26 @@ puts "CHECK CHECK"
       @request_url += "&fl=b2582"
 
       # Send request to Shopstyle.com
-      dresses_by_brand_response = HTTParty.get(@request_url)
+      brand_response = HTTParty.get(@request_url)
 
       # Collect products
-      dresses_by_brand_products = JSON.parse(dresses_by_brand_response.body)["products"]
+      brand_products = JSON.parse(brand_response.body)["products"]
 
       #########################
       # Combine products
       #########################
       # Zip (interweave) products data into one array
-      shirt_products = dresses_by_brand_products.zip(dresses_by_query_products).flatten.compact
+      if !query_products.nil? && !brand_products.nil?
+        if query_products.length >= brand_products.length
+          shirt_products = query_products.zip(brand_products).flatten.compact
+        elsif
+          shirt_products = brand_products.zip(query_products).flatten.compact
+        end
+      elsif !query_products.nil?
+          shirt_products = query_products
+      else
+          shirt_products = brand_products
+      end
       
     elsif @style == 2 # Everyday
       ##########################################
@@ -245,12 +250,10 @@ puts "CHECK CHECK"
       # Combine products
       #########################
       # Zip (interweave) products data into one array
-      shirt_products = shirts_by_query_products.zip(polos_by_query_products).flatten.compact
-      shirt_products = shirt_products.zip(tees_products).flatten.compact
+      shirt_products = tees_products.zip(polos_by_query_products).flatten.compact
+      shirt_products = shirt_products.zip(shirts_by_query_products).flatten.compact
 
-    elsif @style == 3 # Play
-
-    elsif @style == 4 # Trendy
+    elsif @style == 3 # Trendy
       ##########################################
       # API call for Shirts and Blouses category.
       # Search by query: 'denim' and 'blouse'
@@ -262,10 +265,10 @@ puts "CHECK CHECK"
       @request_url += '&fts=denim&fts=blouse'
 
       # Send request to Shopstyle.com
-      shirts_by_query_response = HTTParty.get(@request_url)
+      query_response = HTTParty.get(@request_url)
 
       # Collect products
-      shirts_by_query_products = JSON.parse(shirts_by_query_response.body)["products"]
+      query_products = JSON.parse(query_response.body)["products"]
 
       ##########################################
       # API call for Tees and Tshirts category.
@@ -278,16 +281,27 @@ puts "CHECK CHECK"
       @request_url += '&fts=graphic'
 
       # Send request to Shopstyle.com
-      tees_by_query_response = HTTParty.get(@request_url)
+      tees_response = HTTParty.get(@request_url)
 
       # Collect products
-      tees_by_query_products = JSON.parse(tees_by_query_response.body)["products"]
+      tees_products = JSON.parse(tees_response.body)["products"]
 
       #########################
       # Combine products
       #########################
       # Zip (interweave) products data into one array
-      shirt_products = shirts_by_query_products.zip(tees_by_query_products).flatten.compact
+      if !query_products.nil? && !tees_products.nil?
+        if query_products.length >= tees_products.length
+          shirt_products = query_products.zip(tees_products).flatten.compact
+        elsif
+          shirt_products = tees_products.zip(query_products).flatten.compact
+        end
+      elsif !query_products.nil?
+          shirt_products = query_products
+      else
+          shirt_products = tees_products
+      end
+
     else
       puts "ERROR. No style indicated"
     end
@@ -301,7 +315,7 @@ puts "CHECK CHECK"
   ###########################################
   ########################################### 
   # Sweaters and sweatshirts categories
-  def jackets_API_data
+  def jacket_API_data
     if @style == 0 # Athletic
       #########################################
       # API call for Sweatshirts category.
@@ -359,9 +373,7 @@ puts "CHECK CHECK"
       # Zip (interweave) products data into one array
       jackets_products = sweatshirts_products.zip(sweaters_products).flatten.compact
 
-    elsif @style == 3 # Play
-
-    elsif @style == 4 # Trendy
+    elsif @style == 3 # Trendy
       #########################################
       # API call for Sweaters category.
       # Search with 'print' query
@@ -477,9 +489,7 @@ puts "CHECK CHECK"
       bottoms_products = bottoms_products.zip(shorts_products).flatten.compact
       bottoms_products = bottoms_products.zip(skirts_products).flatten.compact
 
-    elsif @style == 3 # Play
-
-    elsif @style == 4 # Trendy
+    elsif @style == 3 # Trendy
            
       #########################################
       # API call for Jeans category.
