@@ -1,6 +1,8 @@
 # User options
 GENDER = ["boy","girl"]
 
+PRICE = [10, 25, 50, 75, 100, 125, 150, 200, 250, 300, 350]
+
 STYLE = {
     "athletic" => 0,
     "formal" => 1,
