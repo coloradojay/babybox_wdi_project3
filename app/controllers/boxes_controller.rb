@@ -22,23 +22,21 @@ class BoxesController < ApplicationController
 
 		# Save products to Products model
 		box_params[:products_id].each { |type, id|
-			logger.debug("type  #{type.class}")
-			logger.debug("id #{id.class}")
-			if (type == "shirt_id") && !id.nil?
-					logger.debug("in shirt_id")
-				product = ShopStyleAPI.product_info(id)
-				logger.debug("product id: #{product['id'].class}")
-				# include shirt size
-				# @box.products.new(name: product["name"], price: product["price"], style: session[:style], image_url: product["image"]["sizes"]["XLarge"]["url"], description: product["description"], shirt_size: session[:shirt_size], brand: product["brand"]["name"]  )
-				@box.products.new(name: product["name"], price: product["price"], style: session[:style], image_url: product["image"]["sizes"]["XLarge"]["url"], description: product["description"], shirt_size: session[:shirt_size])
 
-				logger.debug(@box.products.first)
+			if (type == "shirt_id") && !id.nil?
+				product = ShopStyleAPI.product_info(id)
+
+				@box.products.new(name: product["brandedName"], price: product["price"], style: session[:style], image_url: product["image"]["sizes"]["XLarge"]["url"], shirt_size: session[:shirt_size])
 			elsif (type == "pant_id") && !id.nil?
 				logger.debug("in pant_id")
+				product = ShopStyleAPI.product_info(id)
+				@box.products.new(name: product["brandedName"], price: product["price"], style: session[:style], image_url: product["image"]["sizes"]["XLarge"]["url"], pants_size: session[:pant_size])
+
 
 			elsif (type == "jacket_id") && !id.nil?
 				logger.debug("in jacket_id")
-
+				product = ShopStyleAPI.product_info(id)
+				@box.products.new(name: product["brandedName"], price: product["price"], style: session[:style], image_url: product["image"]["sizes"]["XLarge"]["url"], jacket_size: session[:jacket_size])
 			end
 		}
 
