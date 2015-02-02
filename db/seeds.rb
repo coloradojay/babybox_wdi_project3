@@ -5,8 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-User.create(first_name: 'Samuel', last_name: 'Jackson', ship_address_1: '123 Bad Mutha Lane', city: 'Los Angeles', ship_state: 'CA', ship_zip: '90026', phone_number: '213-555-1212', email: 'test@test.com', password: 'password')
-User.create(first_name: 'Bob', last_name: 'Johnson', ship_address_1: '123 Lovely Meadows Dr', city: 'Los Angeles', ship_state: 'CA', ship_zip: '90027', phone_number: '213-444-1212', email: 'b@b.com', password: 'password')
+User.create(first_name: 'Samuel', last_name: 'Jackson', ship_address_1: '123 Bad Mutha Lane', ship_city: 'Los Angeles', ship_state: 'CA', ship_zip: '90026', phone_number: '213-555-1212', email: 'test@test.com', password: 'password')
+User.create(first_name: 'Bob', last_name: 'Johnson', ship_address_1: '123 Lovely Meadows Dr', ship_city: 'Los Angeles', ship_state: 'CA', ship_zip: '90027', phone_number: '213-444-1212', email: 'b@b.com', password: 'password')
 Product.create(name: 'Red Shirt', color: 'Red', style: '1', shirt_size: '4', sku: '123456789')
 Product.create(name: 'Red Pants', color: 'Red', style: '1', pants_size: '4', sku: '987654321')
 Product.create(name: 'Red Sweater', color: 'Red', style: '1', jacket_size: '4', sku: '123498765')
