@@ -3,20 +3,20 @@
 		<!-- Boys Search -->
 		<div class="col-md-6 column">
 		<h1>Select for Boys</h1>
-			<%= form_for Product.new do |f| %>
+			<%= form_for Product.new, url: '/products/new', :html => { method: :get}  do |f| %>
 			<div>
 				<%= f.label "Select a Shirt Size" %>
-				<%= f.text_field(:shirt_size) %>
+				<%= f.select :shirt_size, SIZE %>
 			</div>
 			
 			<div>
 				<%= f.label "Select a Pants Size" %>
-				<%= f.text_field(:pants_size) %>
+				<%= f.select :pants_size, SIZE %>
 			</div>
 			
 			<div>
 				<%= f.label "Select a Jacket Size" %>
-				<%= f.text_field(:jacket_size) %>
+				<%= f.select :jacket_size, SIZE %>
 			</div>
 			
 			<div>
@@ -29,20 +29,20 @@
 		<!-- Girls -->
 		<div class="col-md-6 column">
 		<h1>Select for Girls</h1>
-			<%= form_for Product.new do |f| %>
+			<%= form_for Product.new, url: '/products/new', :html => { method: :get} do |f| %>
 			<div>
 				<%= f.label "Select a Shirt Size" %>
-				<%= f.text_field(:shirt_size) %>
+				<%= f.select :shirt_size, SIZE %>
 			</div>
 			
 			<div>
 				<%= f.label "Select a Pants Size" %>
-				<%= f.text_field(:pants_size) %>
+				<%= f.select :pants_size, SIZE %>
 			</div>
 			
 			<div>
 				<%= f.label "Select a Jacket Size" %>
-				<%= f.text_field(:jacket_size) %>
+				<%= f.select :jacket_size, SIZE %>
 			</div>
 			
 			<div>

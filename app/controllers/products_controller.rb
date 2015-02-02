@@ -2,16 +2,25 @@ class ProductsController < ApplicationController
   require_relative "ShopStyleAPI.rb"
   require_relative "GirlsShopStyleAPI.rb"
 
-  GENDER = ["boy","girl"]
-  STYLE = ["athletic","formal","everyday","trendy"]
-  SIZE = ["0-3mo","6-9mo","9-12mo","12-18mo","2T","3T","4T","5T"]
-
 	def index
 
 	end 
 
 	def new
-		call_api = GirlsShopStyleAPI.new
+    # session[:shirt_size]   = filters_params[:shirt_size]
+    # session[:jacket_size]  = filters_params[:jacket_size]
+    # session[:pant_size]    = filters_params[:pant_size]
+    # session[:price]        = filters_params[:price]
+    # session[:gender]       = filters_params[:gender]
+    # session[:style]        = filters_params[:style]
+
+		# call_api = GirlsShopStyleAPI.new
+
+    call_api = GirlsShopStyleAPI.new(0,params[:shirt_size],params[:pants_size],params[:jacket_size],"female",50)
+
+    # call_api = GirlsShopStyleAPI.new(params[:style],params[:shirt_size],params[:pants_size],params[:jacket_size],params[:gender],params[:price]) if params[:gender] == "girl"
+    # call_api = ShopStyleAPI.new(params[:style],params[:shirt_size],params[:pants_size],params[:jacket_size],params[:gender],params[:price]) if params[:gender] == "boy"
+
     @product = Product.new
     @jacket_products  = call_api.jackets_API_data
     @shirt_products   = call_api.shirts_API_data
@@ -28,12 +37,16 @@ class ProductsController < ApplicationController
   end
 
   def filter
-    logger.debug("in filter")
+
   end
 
   private
   def product_ids_params
     params.fetch("product_ids", {}).permit("shirt_id", "jacket_id", "bottom_id")
+  end
+
+  def filters_params
+    params.require(:product).permit(:shirt_size, :pants_size, :jacket_size, :gender, :style, :price)
   end
 
 end
