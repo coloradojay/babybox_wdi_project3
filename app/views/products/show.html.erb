@@ -12,3 +12,31 @@
 <%= image_tag @bottom_info["image"]["sizes"]["XLarge"]["url"] %>
 <%= @bottom_info["priceLabel"] %>
 <%= @bottom_info["brand"]["name"] %>
+
+
+<button id="checkout">Submit</button>
+
+<script>
+$(function() {
+	$( "#checkout" ).click(function() {
+		$.ajax({
+			url: '/boxes/create',
+			type: "POST",
+			data: {
+				box: 
+					{ products_id: {
+						shirt_id: <%= @shirt_info["id"] %>,
+						pant_id: <%= @bottom_info["id"] %>,
+						jacket_id: <%= @jacket_info["id"] %>
+					}
+				}
+			}
+		}).done(function() {
+			location.href =  '/boxes/checkout';
+		});
+		
+	});
+
+
+});
+</script>

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   devise_for :users, path: "user", path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', registration: 'register', edit: 'your_account', sign_up: 'cmon_let_me_in' }
   root 'static_pages#home'
   resources :boxes, except: :index
+  post 'boxes/create' => "boxes#create"
 
   resources :products, only: [:index, :new]
   get "products/filter" => "products#filter"

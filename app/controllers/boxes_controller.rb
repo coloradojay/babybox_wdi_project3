@@ -19,37 +19,32 @@ class BoxesController < ApplicationController
 		@box.order_number = Box.count.to_s
 		# @box.status = BOX_STATUSES[0]
 
-		###############
-		# Not done yet!
-		###############
-		  #   session[:shirt_size]   
-    # session[:jacket_size] 
-    # session[:pant_size]   
-    # session[:price]        
-    # session[:gender]       
-    # session[:style]        
 
 		# Save products to Products model
-		# box_params[:products_id].each { |type, id|
-		# 	if (type == :shirt_id) && !id.nil?
+		box_params[:products_id].each { |type, id|
+			logger.debug("type  #{type.class}")
+			logger.debug("id #{id.class}")
+			if (type == "shirt_id") && !id.nil?
+					logger.debug("in shirt_id")
+				product = ShopStyleAPI.product_info(id)
+				logger.debug("product id: #{product['id'].class}")
+				# include shirt size
+				# @box.products.new(name: product["name"], price: product["price"], style: session[:style], image_url: product["image"]["sizes"]["XLarge"]["url"], description: product["description"], shirt_size: session[:shirt_size], brand: product["brand"]["name"]  )
+				@box.products.new(name: product["name"], price: product["price"], style: session[:style], image_url: product["image"]["sizes"]["XLarge"]["url"], description: product["description"], shirt_size: session[:shirt_size])
 
-		# 		product = ShopStyleAPI.product_info(id)
+				logger.debug(@box.products.first)
+			elsif (type == "pant_id") && !id.nil?
+				logger.debug("in pant_id")
 
-		# 		# include shirt size
-		# 		@box.products.new(name: product["name"], price: product["price"], style: session[:style], image_url: product["image"]["sizes"]["XLarge"]["url"], description: product["description"], shirt_size: session[:shirt_size], brand: ["brand"]["name"]  )
+			elsif (type == "jacket_id") && !id.nil?
+				logger.debug("in jacket_id")
 
-		# 	elsif (type == :pant_id) && !id.nil?
-
-
-		# 	elsif (type == :jacket_id) && !id.nil?
-				
-
-		# 	end
-		# }
+			end
+		}
 
 				
 		if @box.save
-			redirect_to boxes_path
+			redirect_to root_path
 		else
 			#if unsuccessful, reset to the new page
 			render "new"
