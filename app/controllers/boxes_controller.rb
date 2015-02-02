@@ -2,14 +2,8 @@ class BoxesController < ApplicationController
 	require_relative "ShopStyleAPI.rb"
 	require_relative "GirlsShopStyleAPI.rb"
 	
-	def new
-		@box = Box.new
-		
-		@user = current_user
-	end
-
 	def show
-  	# @box = Box.find(current_user)
+		# 
 	end
 
 	def create
@@ -51,10 +45,6 @@ class BoxesController < ApplicationController
 			#if unsuccessful, reset to the new page
 			# render "new"
 		end
-	end
-
-	def update
-
 	end
 
 	def destroy

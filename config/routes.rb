@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   # Boxes
   get "boxes/checkout" => "boxes#checkout"
-  resources :boxes, except: :index
+  resources :boxes, except: [:index, :update, :create, :new]
   post 'boxes/create' => "boxes#create"
 
 

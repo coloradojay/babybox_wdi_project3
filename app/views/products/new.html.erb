@@ -1,41 +1,56 @@
 <div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <div class="row">
+              <div class="col-md-6">
+                <h5><span class="glyphicon glyphicon-shopping-cart"></span>Choose an Outfit</h5>
+              </div>
+              <div class="col-md-2 col-md-offset-10">
+                <%= form_tag("/products/show", method: "post", id:"id_form") do %>
+                  <h5><%= submit_tag(value="Review Order") %></h5>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-4 box">
+             <h4 class='text-center'>Jackets and Sweaters</h4>
+              <div class='text-center'>
+                <button id="toggle-left-jacket" class="glyphicon glyphicon-chevron-left"></button>
+                <button id="toggle-right-jacket" class='glyphicon glyphicon-chevron-right'></button>
+              </div>
+              <div id='jacket_info' class='text-center'></div>
+            </div>
 
-   <%= form_tag("/products/show", method: "post", id:"id_form") do %>
-     <%= submit_tag(value="Review Order") %>
-   <% end %>
-    <div class="row">
-       <div class="col-md-4 box">
-       		JACKETS
+            <div class="col-md-4 box">
+              <h4 class='text-center'>Shirts</h4>
+              <div class='text-center'>
+                <button id="toggle-left-shirt" class="glyphicon glyphicon-chevron-left"></button>
+                <button id="toggle-right-shirt" class='glyphicon glyphicon-chevron-right'></button>
+              </div>
+              <div id='shirt_info' class='text-center'></div>
+            </div>
 
-	      <button id="toggle-left-jacket"></button>
-	  		<button id="toggle-right-jacket"></button>
-
-	  		<div id='jacket_info'></div>
-
-       </div>
-
-
-   		<div class="col-md-4 box">
-			SHIRTS
-
-	       	<button id="toggle-left-shirt"></button>
-	  		<button id="toggle-right-shirt"></button>
-
-	  		<div id='shirt_info'></div>
-
-		</div>
-
-
-       	<div class="col-md-4 box">
-       		Pants
-
-	       <button id="toggle-left-bottom"></button>
-	  		<button id="toggle-right-bottom"></button>
-
-	  		<div id='bottom_info'></div>
-       	</div>
-    </div>    
+            <div class="col-md-4 box">
+              <h4 class='text-center'>Pants</h4>
+              <div class='text-center'>
+                <button id="toggle-left-bottom" class="glyphicon glyphicon-chevron-left"></button>
+                <button id="toggle-right-bottom" class='glyphicon glyphicon-chevron-right'></button>
+              </div>
+              <div id='bottom_info' class='text-center'></div>
+            </div>
+          </div>    
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
 
 
 
@@ -53,18 +68,18 @@ $(function() {
   /**************************************************
   * On document load, load first images of products
   ***************************************************/  
-  $('#shirt_info').append(shirtProducts[0].priceLabel)
-  $('#shirt_info').append("<img src=" + shirtProducts[0].image.sizes.XLarge.url + ">");
+  $('#shirt_info').append("<h5>" + shirtProducts[0].priceLabel + '</h5>')
+  $('#shirt_info').append("<img src=" + shirtProducts[0].image.sizes.XLarge.url + " class='center-block'>");
   $('#shirt_info').append(shirtProducts[0].description)
   $('#id_form').append("<input id='hidden_shirt_id' type='hidden' name='product_ids[shirt_id]' value=" + shirtProducts[0].id + ">");
   
-  $('#jacket_info').append(jacketProducts[0].priceLabel)
-  $('#jacket_info').append("<img src=" + jacketProducts[0].image.sizes.XLarge.url + ">");
+  $('#jacket_info').append('<h5>' + jacketProducts[0].priceLabel + '</h5>')
+  $('#jacket_info').append("<img src=" + jacketProducts[0].image.sizes.XLarge.url + " class='center-block'>");
   $('#jacket_info').append(jacketProducts[0].description)
   $('#id_form').append("<input id='hidden_jacket_id' type='hidden' name='product_ids[jacket_id]' value=" + jacketProducts[0].id + ">");
 
-  $('#bottom_info').append(bottomProducts[0].priceLabel)
-  $('#bottom_info').append("<img src=" + bottomProducts[0].image.sizes.XLarge.url + ">");
+  $('#bottom_info').append('<h5>' + bottomProducts[0].priceLabel + '</h5>')
+  $('#bottom_info').append("<img src=" + bottomProducts[0].image.sizes.XLarge.url + " class='center-block'>");
   $('#bottom_info').append(bottomProducts[0].description)
   $('#id_form').append("<input id='hidden_bottom_id' type='hidden' name='product_ids[bottom_id]' value=" + bottomProducts[0].id + ">");
 
@@ -74,7 +89,7 @@ $(function() {
   ***************************************************/ 
   function update(image_id, productsArray, index) {
     $(image_id).empty();
-    $(image_id).append(productsArray[index].priceLabel)
+    $(image_id).append('<h5>' + productsArray[index].priceLabel + '</h5>')
     $(image_id).append("<img src=" + productsArray[index].image.sizes.XLarge.url + ">");
     $(image_id).append(productsArray[index].description)
 

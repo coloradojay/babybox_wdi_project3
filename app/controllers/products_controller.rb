@@ -14,9 +14,6 @@ class ProductsController < ApplicationController
     session[:gender]       = filters_params[:gender]
     session[:style]        = filters_params[:style].to_i
     
-    # Athletic 
-    # call_api = GirlsShopStyleAPI.new(0,filters_params[:shirt_size],filters_params[:pants_size],filters_params[:jacket_size],"female",25)
-
     call_api = GirlsShopStyleAPI.new(filters_params[:style],filters_params[:shirt_size],filters_params[:pants_size],filters_params[:jacket_size],filters_params[:gender],filters_params[:price]) if filters_params[:gender] == "girl"
 
     call_api = ShopStyleAPI.new(filters_params[:style],filters_params[:shirt_size],filters_params[:pants_size],filters_params[:jacket_size],filters_params[:gender],filters_params[:price]) if filters_params[:gender] == "boy"
