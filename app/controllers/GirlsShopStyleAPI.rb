@@ -58,7 +58,8 @@ class GirlsShopStyleAPI < ApplicationController
   # Call API to return information for one product
   def self.product_info(product_id)
     @@response = HTTParty.get("http://api.shopstyle.com/api/v2/products/#{product_id}?pid=#{PID}")
-    JSON.parse(@@response.body)    
+
+    JSON.parse(@@response.body)
   end  
 
 

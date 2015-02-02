@@ -25,14 +25,14 @@ $(function() {
 			data: {
 				box: 
 					{ products_id: {
-						shirt_id: <%= @shirt_info["id"] %>,
-						pant_id: <%= @bottom_info["id"] %>,
-						jacket_id: <%= @jacket_info["id"] %>
+						shirt_id: <%= raw @shirt_info["id"] %>,
+						pant_id: <%= raw @bottom_info["id"] %>,
+						jacket_id: <%= raw @jacket_info["id"] %>
 					}
 				}
 			}
-		}).done(function() {
-			location.href =  '/boxes/checkout';
+		}).success(function() {
+			location.href =  '/';
 		});
 		
 	});
