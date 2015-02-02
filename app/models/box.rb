@@ -7,7 +7,7 @@ class Box < ActiveRecord::Base
 
 	# Customizing JSON
 	def as_json(options={})
-		# super(:only => [])
+		super(:only => [:order_number, :id])
 	end
 	
 end
