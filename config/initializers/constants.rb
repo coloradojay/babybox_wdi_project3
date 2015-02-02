@@ -8,7 +8,6 @@ STYLE = {
     "trendy" => 3
 }
  
-
 SIZE  = {
     "0-3mo" => 0,
     "3-6mo" => 1,
@@ -20,3 +19,12 @@ SIZE  = {
     "4T" => 7,
     "5T" => 8
   }
+
+# Adding constant for box status, allowing for business to update in the future
+BOX_STATUSES = {
+    0 => "Processing",
+    1 => "Shipped",
+    2 => "Delivered",
+    3 => "Returned",
+    4 => "Unsuccessful"
+}

@@ -1,14 +1,42 @@
 <%= image_tag @shirt_info["image"]["sizes"]["XLarge"]["url"] %>
 <%= @shirt_info["priceLabel"] %>
-<%= @shirt_info["brand"]["name"] %>
+<%= @shirt_info["brandedName"] %>
 
 
 
 <%= image_tag @jacket_info["image"]["sizes"]["XLarge"]["url"] %>
 <%= @jacket_info["priceLabel"] %>
-<%= @jacket_info["brand"]["name"] %>
+<%= @jacket_info["brandedName"] %>
 
 
 <%= image_tag @bottom_info["image"]["sizes"]["XLarge"]["url"] %>
 <%= @bottom_info["priceLabel"] %>
-<%= @bottom_info["brand"]["name"] %>
+<%= @bottom_info["brandedName"] %>
+
+
+<button id="checkout">Submit</button>
+
+<script>
+$(function() {
+	$( "#checkout" ).click(function() {
+		$.ajax({
+			url: '/boxes/create',
+			type: "POST",
+			data: {
+				box: 
+					{ products_id: {
+						shirt_id: <%= raw @shirt_info["id"] %>,
+						pant_id: <%= raw @bottom_info["id"] %>,
+						jacket_id: <%= raw @jacket_info["id"] %>
+					}
+				}
+			}
+		}).success(function() {
+			location.href =  '/';
+		});
+		
+	});
+
+
+});
+</script>

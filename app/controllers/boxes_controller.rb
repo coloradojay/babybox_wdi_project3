@@ -9,7 +9,7 @@ class BoxesController < ApplicationController
 	end
 
 	def show
-  	@box = Box.find(current_user)
+  	# @box = Box.find(current_user)
 	end
 
 	def create
@@ -17,42 +17,39 @@ class BoxesController < ApplicationController
 
 		@box.user = current_user
 		@box.order_number = Box.count.to_s
-		# @box.status = BOX_STATUSES[0]
+		@box.status = BOX_STATUSES[0]
 
-		###############
-		# Not done yet!
-		###############
-		  #   session[:shirt_size]   
-    # session[:jacket_size] 
-    # session[:pant_size]   
-    # session[:price]        
-    # session[:gender]       
-    # session[:style]        
+		# Save products to @box
+		box_params[:products_id].each { |type, id|
 
-		# Save products to Products model
-		# box_params[:products_id].each { |type, id|
-		# 	if (type == :shirt_id) && !id.nil?
+			# Save shirt product
+			if (type == "shirt_id") && !id.nil?
+				product = ShopStyleAPI.product_info(id)
 
-		# 		product = ShopStyleAPI.product_info(id)
+				@box.products.new(name: product["brandedName"], price: product["price"], style: session[:style], image_url: product["image"]["sizes"]["XLarge"]["url"], shirt_size: session[:shirt_size])
 
-		# 		# include shirt size
-		# 		@box.products.new(name: product["name"], price: product["price"], style: session[:style], image_url: product["image"]["sizes"]["XLarge"]["url"], description: product["description"], shirt_size: session[:shirt_size], brand: ["brand"]["name"]  )
+			# Save pants product
+			elsif (type == "pant_id") && !id.nil?
 
-		# 	elsif (type == :pant_id) && !id.nil?
+				product = ShopStyleAPI.product_info(id)
 
+				@box.products.new(name: product["brandedName"], price: product["price"], style: session[:style], image_url: product["image"]["sizes"]["XLarge"]["url"], pants_size: session[:pant_size])
 
-		# 	elsif (type == :jacket_id) && !id.nil?
-				
+			# Save jacket product
+			elsif (type == "jacket_id") && !id.nil?
 
-		# 	end
-		# }
+				product = ShopStyleAPI.product_info(id)
+
+				@box.products.new(name: product["brandedName"], price: product["price"], style: session[:style], image_url: product["image"]["sizes"]["XLarge"]["url"], jacket_size: session[:jacket_size])
+			end
+		}
 
 				
 		if @box.save
-			redirect_to boxes_path
+			redirect_to root_path
 		else
 			#if unsuccessful, reset to the new page
-			render "new"
+			# render "new"
 		end
 	end
 
@@ -74,12 +71,12 @@ class BoxesController < ApplicationController
 	end
 
 	def checkout
-		@box = Box.find(current_user)
+		
 	end
 
 	private
 	def box_params
-		params.require(:box).permit(:gender,:shirt_size,:pant_size,:jacket_size,:style, :products_id => [:shirt_id,:pant_id,:jacket_id])
+		params.require(:box).permit(:products_id => [:shirt_id,:pant_id,:jacket_id])
 	end
 
 end
