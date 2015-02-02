@@ -1,0 +1,33 @@
+<h1>LET'S TAKE A LOOK AT YOUR BOX!</h1>
+
+  <div class="container">
+  
+    <div class="row">
+       <div class="col-md-4 box">
+       		YOUR JACKET
+
+
+	  		<div id='jacket_info'></div>
+
+       </div>
+
+
+   		<div class="col-md-4 box">
+			YOUR SHIRT
+
+
+	  		<div id='shirt_info'></div>
+
+		</div>
+
+
+       	<div class="col-md-4 box">
+       		YOUR PANTS
+
+	  		<div id='bottom_info'></div>
+       	</div>
+       	 <%= form_tag("/products/create", method: "post", id:"id_form") do %>
+     <%= submit_tag(value="Proceed to Checkout") %>
+        <% end %>
+
+    </div>
