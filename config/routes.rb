@@ -22,7 +22,9 @@ Rails.application.routes.draw do
 
   # API
   namespace :api do
-    resources :boxes, only: [:index, :show, :show_category, :show_gender, :show_category_gender], defaults: { format: "json"}
+    get 'boxes/index' => 'boxes#index', defaults: { format: "json"}
+    get 'boxes/show'  => 'boxes#show', defaults: { format: "json"}
+    get 'boxes/show_first_ten'  => 'boxes#show_first_ten', defaults: { format: "json"}
   end
 
 
