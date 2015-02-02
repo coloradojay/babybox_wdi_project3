@@ -1,6 +1,5 @@
-<h1>Products</h1>
+<div class="container">
 
-   <div class="container">
    <%= form_tag("/products/show", method: "post", id:"id_form") do %>
      <%= submit_tag(value="Review Order") %>
    <% end %>
@@ -35,10 +34,10 @@
 
 	  		<div id='bottom_info'></div>
        	</div>
-    </div>
-
-    
+    </div>    
 </div>
+
+
 
 <script>
 $(function() {

@@ -1,20 +1,56 @@
-<%= image_tag @shirt_info["image"]["sizes"]["XLarge"]["url"] %>
-<%= @shirt_info["priceLabel"] %>
-<%= @shirt_info["brandedName"] %>
+<h1>Review Your Box</h1>
+
+  <div class="container">
+  <button id="checkout">Proceed to Checkout</button>
+    <div class="row">
+       <div class="col-md-4 box">
+       		<%= image_tag @jacket_info["image"]["sizes"]["XLarge"]["url"] %>
+
+	  		<div id='jacket_info'>
+	  			<%= @jacket_info["priceLabel"] %>
+				<%= @jacket_info["brandedName"] %>
+	  		</div>
+
+       </div>
+
+   		<div class="col-md-4 box">
+			<%= image_tag @shirt_info["image"]["sizes"]["XLarge"]["url"] %>
+
+	  		<div id='shirt_info'>
+	  			<%= @shirt_info["priceLabel"] %>
+				<%= @shirt_info["brandedName"] %>
+	  		</div>
+
+		</div>
+
+
+       	<div class="col-md-4 box">
+       		<%= image_tag @bottom_info["image"]["sizes"]["XLarge"]["url"] %>
+
+	  		<div id='bottom_info'>
+	  			<%= @bottom_info["priceLabel"] %>
+				<%= @bottom_info["brandedName"] %>
+	  		</div>
+       	</div>
+    </div>
 
 
 
-<%= image_tag @jacket_info["image"]["sizes"]["XLarge"]["url"] %>
-<%= @jacket_info["priceLabel"] %>
-<%= @jacket_info["brandedName"] %>
 
 
-<%= image_tag @bottom_info["image"]["sizes"]["XLarge"]["url"] %>
-<%= @bottom_info["priceLabel"] %>
-<%= @bottom_info["brandedName"] %>
 
 
-<button id="checkout">Submit</button>
+
+       	 <%= form_tag("/products/create", method: "post", id:"id_form") do %>
+     <%= submit_tag(value="Proceed to Checkout") %>
+        <% end %>
+
+
+
+
+
+
+
 
 <script>
 $(function() {
@@ -31,8 +67,8 @@ $(function() {
 					}
 				}
 			}
-		}).success(function() {
-			location.href =  '/';
+		}).success(function(data) {
+			location.href =  '/boxes/checkout';
 		});
 		
 	});

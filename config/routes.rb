@@ -1,19 +1,26 @@
 Rails.application.routes.draw do
 
+  root 'static_pages#home'
 
   # devise_for :users
   devise_for :users, path: "user", path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', registration: 'register', edit: 'your_account', sign_up: 'cmon_let_me_in' }
-  root 'static_pages#home'
+  
+  # Users
+  resources :users, except: :index
+
+  # Boxes
+  get "boxes/checkout" => "boxes#checkout"
   resources :boxes, except: :index
   post 'boxes/create' => "boxes#create"
 
+
+  # Products
   resources :products, only: [:index, :new]
   get "products/filter" => "products#filter"
   post "products/show" => "products#show"
 
 
-  resources :users, except: :index
-
+  # API
   namespace :api do
     resources :boxes, only: [:index, :show, :show_category, :show_gender, :show_category_gender], defaults: { format: "json"}
   end

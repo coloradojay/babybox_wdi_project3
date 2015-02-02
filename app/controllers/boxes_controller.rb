@@ -54,24 +54,32 @@ class BoxesController < ApplicationController
 	end
 
 	def update
-		@box = Post.find(params[:id])
 
-		if @box.update_attributes(box_params)
-			redirect_to boxes_path
-		else
-			#if unsuccessful, show to the edit page
-			render :update
-		end
 	end
 
 	def destroy
-		@post = Post.find(params[:id])
-		@post.destroy
-		redirect_to root_path
+
 	end
 
 	def checkout
-		
+		# Retrieving recently created box
+		@box = Box.where(user_id: current_user).last
+
+		@total_price = 0
+
+		# To calculate total price of box
+		@box.products.each do |product|
+			if !product.shirt_size.nil?		
+			  @shirt = product
+			  @total_price += @shirt.price
+			elsif !product.jacket_size.nil?
+				@jacket = product
+				@total_price += @jacket.price
+			elsif !product.pants_size.nil?
+				@pants = product
+				@total_price += @pants.price
+			end
+		end
 	end
 
 	private
