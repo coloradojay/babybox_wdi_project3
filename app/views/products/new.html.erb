@@ -9,9 +9,9 @@
                 <h5><span class="glyphicon glyphicon-shopping-cart"></span>Choose an Outfit</h5>
               </div>
               <div class="col-md-2 col-md-offset-10">
-                <%= form_tag("/products/show", method: "post", id:"id_form") do %>
-                  <h5><%= submit_tag(value="Review Order") %></h5>
-                <% end %>
+              <%= form_tag("/products/show", method: "post", id:"id_form") do %>
+                <h5><%= submit_tag(value="Review Order", style: "font-size: 18px") %></h5>
+              <% end %>
               </div>
             </div>
           </div>
@@ -107,7 +107,7 @@ $(function() {
   ***************************************************/  
   // Jacket Images
   $( "#toggle-right-jacket" ).click(function() {
-    if( indexJacket < jacketProducts.length) {
+    if( indexJacket < jacketProducts.length - 1) {
     	indexJacket++;
       update('#jacket_info', jacketProducts, indexJacket)
     }
@@ -122,7 +122,7 @@ $(function() {
 
   // Shirt Images
   $( "#toggle-right-shirt" ).click(function() {
-    if( indexShirt < shirtProducts.length) {
+    if( indexShirt < shirtProducts.length - 1) {
       indexShirt++;
       update('#shirt_info', shirtProducts, indexShirt)
     }
@@ -137,7 +137,7 @@ $(function() {
 
   // Bottoms Images
   $( "#toggle-right-bottom" ).click(function() {
-    if( indexBottom < bottomProducts.length) {
+    if( indexBottom < bottomProducts.length - 1) {
         indexBottom++;
         update('#bottom_info', bottomProducts, indexBottom)
     }
