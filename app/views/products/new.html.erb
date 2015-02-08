@@ -70,17 +70,17 @@ $(function() {
   ***************************************************/  
   $('#shirt_info').append("<h5>" + shirtProducts[0].priceLabel + '</h5>')
   $('#shirt_info').append("<img src=" + shirtProducts[0].image.sizes.XLarge.url + " class='center-block'>");
-  $('#shirt_info').append(shirtProducts[0].description)
+  // $('#shirt_info').append(shirtProducts[0].description)
   $('#id_form').append("<input id='hidden_shirt_id' type='hidden' name='product_ids[shirt_id]' value=" + shirtProducts[0].id + ">");
   
   $('#jacket_info').append('<h5>' + jacketProducts[0].priceLabel + '</h5>')
   $('#jacket_info').append("<img src=" + jacketProducts[0].image.sizes.XLarge.url + " class='center-block'>");
-  $('#jacket_info').append(jacketProducts[0].description)
+  // $('#jacket_info').append(jacketProducts[0].description)
   $('#id_form').append("<input id='hidden_jacket_id' type='hidden' name='product_ids[jacket_id]' value=" + jacketProducts[0].id + ">");
 
   $('#bottom_info').append('<h5>' + bottomProducts[0].priceLabel + '</h5>')
   $('#bottom_info').append("<img src=" + bottomProducts[0].image.sizes.XLarge.url + " class='center-block'>");
-  $('#bottom_info').append(bottomProducts[0].description)
+  // $('#bottom_info').append(bottomProducts[0].description)
   $('#id_form').append("<input id='hidden_bottom_id' type='hidden' name='product_ids[bottom_id]' value=" + bottomProducts[0].id + ">");
 
 
@@ -91,7 +91,7 @@ $(function() {
     $(image_id).empty();
     $(image_id).append('<h5>' + productsArray[index].priceLabel + '</h5>')
     $(image_id).append("<img src=" + productsArray[index].image.sizes.XLarge.url + ">");
-    $(image_id).append(productsArray[index].description)
+    // $(image_id).append(productsArray[index].description)
 
     if(productsArray === shirtProducts)
       $('#hidden_shirt_id').attr("value", shirtProducts[index].id)

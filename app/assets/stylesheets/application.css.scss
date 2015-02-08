@@ -886,3 +886,6 @@ img::-moz-selection {
 body {
     webkit-tap-highlight-color: rgb(150,205,205);
 }
+.text-center > img {
+    max-width: 50%;
+}
