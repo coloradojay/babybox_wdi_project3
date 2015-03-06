@@ -27,6 +27,9 @@ Rails.application.routes.draw do
     get 'boxes/show_first_ten'  => 'boxes#show_first_ten', defaults: { format: "json"}
   end
 
+  #Stripe Resources
+  resources :charges
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
